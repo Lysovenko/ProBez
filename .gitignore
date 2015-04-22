@@ -1,0 +1,7 @@
+*~
+*.o
+*.xml
+.git
+probez-gtk
+*.so
+TAGS
