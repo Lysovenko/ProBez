@@ -17,7 +17,7 @@
  *      MA 02110-1301, USA.
  */
 #include <stdlib.h>
-#include "prj.h"
+#include "probez.h"
 pr_point
 lv2prp (LINVEC v)
 {

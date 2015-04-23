@@ -18,7 +18,7 @@
  */
 
 #include <gtk/gtk.h>
-#include "prj.h"
+#include "probez.h"
 #include <pgl.h>
 #include <stdlib.h>
 #include <string.h>

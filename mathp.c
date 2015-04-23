@@ -17,7 +17,7 @@
  *      MA 02110-1301, USA.
  */
 #include <vmath.h>
-#include "prj.h"
+#include "probez.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>

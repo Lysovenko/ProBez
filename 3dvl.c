@@ -26,7 +26,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 
-#include "prj.h"
+#include "probez.h"
 
 CYLINDER interspher_cyl (SPHERE * sph1, SPHERE * sph2, double r,int cyl_id,int type)
 {

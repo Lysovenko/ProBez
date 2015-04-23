@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "prj.h"
+#include "probez.h"
 static void **TotalDataForRequests;
 
 void InitRequests ()

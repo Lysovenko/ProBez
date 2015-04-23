@@ -20,7 +20,7 @@
 #include <string.h>
 #include <math.h>
 #include <vmath.h>
-#include "prj.h"
+#include "probez.h"
 
 static BEZIERP mask_sph_sph_helper (BEZIERP bp, BEZIERP * ABC, int ncor,
 				    int mode, int m2);
