@@ -10,7 +10,7 @@ GOBJS = window.o dialogs.o
 LOBJS = 3dvl.o mask.o mathp.o plot.o projection.o \
        proj_cyl.o proj_sph.o request.o
 probez-gtk: $(GOBJS) libprobez.so
-	gcc $(LIBS) -o probez-gtk $(GOBJS) -lprobez -L. 
+	gcc $(GTKLIBS) -o probez-gtk $(GOBJS) -lprobez -L.  $(LIBS)
 libprobez.so: $(LOBJS)
 	gcc --shared $(LOBJS) -o libprobez.so $(LIBS)
 %.o:%.c
