@@ -25,16 +25,7 @@
 static BEZIERP mask_sph_sph_helper (BEZIERP bp, BEZIERP * ABC, int ncor,
 				    int mode, int m2);
 
-int
-is_sqa_intersect (SQRAREA sq1, SQRAREA sq2)
-{
-  return 1;			// !(sq1.min_x>sq2.max_x || sq1.max_x<sq2.min_x ||
-  // sq1.min_y>sq2.max_y || sq1.max_y<sq2.min_y);
-  // (sq1.max_x>=sq2.min_x&&sq1.max_x<=sq2.max_x ||
-  // sq1.min_x>=sq2.min_x&&sq1.min_x<=sq2.max_x) &&
-  // (sq1.max_y>=sq2.min_y&&sq1.max_y<=sq2.max_y ||
-  // sq1.min_y>=sq2.min_y&&sq1.min_y<=sq2.max_y))
-}
+
 
 /* Help function for next only ;) */
 static LINEP
@@ -540,20 +531,16 @@ mask_all (P_KUPA all)
   for (i = 0; i < all.ncyls; i++)
     for (j = 0; j < all.ncyls; j++)
       if (i != j)
-	if (is_sqa_intersect (all.cyls[i].sqa, all.cyls[j].sqa))
 	  mask_cyl_cyl (all.cyls + i, all.cyls[j], all.ncor);
   for (i = 0; i < all.ncyls; i++)
     for (j = 0; j < all.nsphers; j++)
-      if (is_sqa_intersect (all.cyls[i].sqa, all.sphers[j].sqa))
 	mask_cyl_sph (all.cyls + i, all.sphers[j], all.ncor);
   for (i = 0; i < all.nsphers; i++)
     for (j = 0; j < all.nsphers; j++)
       if (i != j)
-	if (is_sqa_intersect (all.sphers[i].sqa, all.sphers[j].sqa))
 	  mask_sph_sph (all.sphers + i, all.sphers[j], all.ncor);
   for (i = 0; i < all.nsphers; i++)
     for (j = 0; j < all.ncyls; j++)
-      if (is_sqa_intersect (all.sphers[i].sqa, all.cyls[j].sqa))
 	mask_sph_cyl (all.sphers + i, all.cyls[j], all.ncor, j);
   for (i = 0; i < all.nsphers; i++)
     {
