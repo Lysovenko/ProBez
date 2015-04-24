@@ -88,7 +88,6 @@ scribble_motion_notify_event (GtkWidget * widget,
 			      GdkEventMotion * event, gpointer data)
 {
   int x, y;
-  void *tmp;
   tensor *tens;
   GdkModifierType state;
 
@@ -103,9 +102,6 @@ scribble_motion_notify_event (GtkWidget * widget,
 		      (double) x) / (double) ext_psc.H, *tens);
       PrevMousePoint.x = x;
       PrevMousePoint.y = y;
-      tmp = ext_prb;
-      ext_prb = NULL;
-      free (tmp);
       {
 	visualization_generator (*tens);
 	gdk_window_invalidate_rect (widget->window, NULL, TRUE);
@@ -122,59 +118,59 @@ Delete (GtkWidget * widget, gpointer * data)
   return FALSE;
 }
 
+static void
+fill_menu (GtkWidget *window, GtkWidget * MenuBar)
+{
+  GtkWidget *FileMenu, *open_item, *file_item,
+    *view_item, *point_plane_item, *save2post_item, *ViewMenu, *exit_item,
+    *file_ps2_item, *file_save_svg_item;
+  FileMenu = gtk_menu_new ();
+  ViewMenu = gtk_menu_new ();
+  file_item = gtk_menu_item_new_with_label ("File");
+  view_item = gtk_menu_item_new_with_label ("View");
+  // -------- FILE
+  open_item = gtk_menu_item_new_with_label ("Open");
+
+  g_signal_connect (GTK_OBJECT (open_item), "activate",
+		    G_CALLBACK (load3d_xml_file), window);
+  gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), open_item);
+
+  save2post_item = gtk_menu_item_new_with_label ("Save to PS");
+  g_signal_connect (GTK_OBJECT (save2post_item), "activate",
+		    G_CALLBACK (ps_to_stdout), window);
+  gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), save2post_item);
+  file_save_svg_item = gtk_menu_item_new_with_label ("Save to SVG");
+  g_signal_connect (GTK_OBJECT (file_save_svg_item), "activate",
+		    G_CALLBACK (svg_to_file), window);
+  gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), file_save_svg_item);
+  file_ps2_item = gtk_menu_item_new_with_label ("Duplet");
+  g_signal_connect (GTK_OBJECT (file_ps2_item), "activate",
+		    G_CALLBACK (ps_to_file2), window);
+  gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), file_ps2_item);
+  exit_item = gtk_menu_item_new_with_label ("Exit");
+  g_signal_connect (GTK_OBJECT (exit_item), "activate",
+		    G_CALLBACK (gtk_main_quit), NULL);
+  gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), exit_item);
+  // --------- VIEW
+  point_plane_item = gtk_menu_item_new_with_label ("View point");
+  g_signal_connect (GTK_OBJECT (point_plane_item), "activate",
+		    G_CALLBACK (dialog_wiewpoint), window);
+  gtk_menu_shell_append (GTK_MENU_SHELL (ViewMenu), point_plane_item);
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (file_item), FileMenu);
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (view_item), ViewMenu);
+  gtk_menu_shell_append (GTK_MENU_SHELL (MenuBar), file_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (MenuBar), view_item);
+}
+
 void
 CreateDraw ()
 {
-  GtkWidget *window;
-  GtkWidget *vBox;
-  GtkWidget *DrawArea, *MenuBar, *StatusBar;
+  GtkWidget *vBox, *window, *DrawArea, *MenuBar, *StatusBar;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   MenuBar = gtk_menu_bar_new ();
-  // //****************************************////
-  {
-    GtkWidget *FileMenu, *open_item, *file_item,
-      *view_item, *point_plane_item, *save2post_item, *ViewMenu, *exit_item,
-      *file_ps2_item, *file_save_svg_item;
-    FileMenu = gtk_menu_new ();
-    ViewMenu = gtk_menu_new ();
-    file_item = gtk_menu_item_new_with_label ("File");
-    view_item = gtk_menu_item_new_with_label ("View");
-    // -------- FILE
-    open_item = gtk_menu_item_new_with_label ("Open");
-
-    g_signal_connect (GTK_OBJECT (open_item), "activate",
-		      G_CALLBACK (load3d_xml_file), window);
-    gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), open_item);
-
-    save2post_item = gtk_menu_item_new_with_label ("Save to PS");
-    g_signal_connect (GTK_OBJECT (save2post_item), "activate",
-		      G_CALLBACK (ps_to_stdout), window);
-    gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), save2post_item);
-    file_save_svg_item = gtk_menu_item_new_with_label ("Save to SVG");
-    g_signal_connect (GTK_OBJECT (file_save_svg_item), "activate",
-		      G_CALLBACK (svg_to_file), window);
-    gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), file_save_svg_item);
-    file_ps2_item = gtk_menu_item_new_with_label ("Duplet");
-    g_signal_connect (GTK_OBJECT (file_ps2_item), "activate",
-		      G_CALLBACK (ps_to_file2), window);
-    gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), file_ps2_item);
-    exit_item = gtk_menu_item_new_with_label ("Exit");
-    g_signal_connect (GTK_OBJECT (exit_item), "activate",
-		      G_CALLBACK (gtk_main_quit), NULL);
-    gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), exit_item);
-    // --------- VIEW
-    point_plane_item = gtk_menu_item_new_with_label ("View point");
-    g_signal_connect (GTK_OBJECT (point_plane_item), "activate",
-		      G_CALLBACK (dialog_wiewpoint), window);
-    gtk_menu_shell_append (GTK_MENU_SHELL (ViewMenu), point_plane_item);
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM (file_item), FileMenu);
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM (view_item), ViewMenu);
-    gtk_menu_shell_append (GTK_MENU_SHELL (MenuBar), file_item);
-    gtk_menu_shell_append (GTK_MENU_SHELL (MenuBar), view_item);
-  }
-  // //*****************************************////
-  gtk_window_set_title (GTK_WINDOW (window), "Maliuvajka");
+  fill_menu (window, MenuBar);
+  gtk_window_set_title (GTK_WINDOW (window), "ProBez");
   vBox = gtk_vbox_new (FALSE, 0);
   DrawArea = gtk_drawing_area_new ();
   gtk_widget_set_size_request (DrawArea, 400, 300);

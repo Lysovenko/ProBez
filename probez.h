@@ -198,20 +198,6 @@ void UnsetRequest (int n);
 /*=======================*/
 void projection_all_del (P_KUPA all);
 
-/* Requests */
-void *ext_prb;
-
-#define N_requests 10
-#define DAT_COMPCFG 0
-#define DAT_CIRCLIN 1
-#define STATUSBAR 2
-#define  CameraData 3
-#define PRIMITIVES 4
-#define KUPA_3D 5
-#define PT_OF_V 6
-#define TENS 7
-#define KUPAS_3D 8
-#define G_ 9
 /// FIGURES
 #define FIG_CYLINDER 1
 #define FIG_SPHERE 2

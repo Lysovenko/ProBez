@@ -16,26 +16,33 @@
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *      MA 02110-1301, USA.
  */
+
 #include <stdlib.h>
 #include <string.h>
-
-#include "probez.h"
+#include "interf.h"
 static void **TotalDataForRequests;
 
-void InitRequests ()
+void
+InitRequests ()
 {
   TotalDataForRequests = malloc (sizeof (void *) * N_requests);
   memset (TotalDataForRequests, 0, sizeof (void *) * N_requests);
 }
-void *GetRequest (int n)
+
+void *
+GetRequest (int n)
 {
   return TotalDataForRequests[n];
 }
-void SetRequest (int n, void *what)
+
+void
+SetRequest (int n, void *what)
 {
   TotalDataForRequests[n] = what;
 }
-void UnsetRequest (int n)
+
+void
+UnsetRequest (int n)
 {
   TotalDataForRequests[n] = NULL;
 }
