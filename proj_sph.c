@@ -147,9 +147,8 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
   int i, nholes;
   double R;
 
-  /* vp.x = 0.; vp.y = 0.; vp.z = Hz + Hp; */
   nv = VecIneq (VP.vp, sph.o);
-  memset (&res, 0, sizeof (P_SPHERE));	// berezenogo bog bereze
+  memset (&res, 0, sizeof (P_SPHERE));
   res.lvis = sqrt (VecAbs2 (nv));
   nv = ProdScal (1. / res.lvis, nv);
   R = sqrt (res.lvis * res.lvis - sph.r * sph.r) * sph.r / res.lvis;
@@ -186,7 +185,6 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
 	int j, cut =
 	  is_hole_cut (VecIneq (VP.vp, sph.o), sph.holes[i].n, sph.r,
 		       sph.holes[i].r);
-	//, draw_hole = 1;
 	holelin.fig_id = sph.holes[i].fig_id;
 	holelin.figure = sph.holes[i].figure;
 	polig2 =
@@ -202,7 +200,6 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
 	Allocator (res.holes =
 		   realloc (res.holes, sizeof (*res.holes) * (nholes + 1)));
 	Allocator (holelin.bs = calloc (sizeof (*holelin.bs), ncor));
-///      memset (res.holeline + ncor * nholes, 0, sizeof (BEZIERP) * ncor);
 	for (j = 0; j < ncor; j++)
 	  {
 	    vector mp1, mp2;
@@ -233,7 +230,7 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
 	      VecIneq (v2, ProdScal (DotProd (v1, v2) / VecAbs2 (v1), v1));
 	    pv2 =
 	      VecIneq (v1, ProdScal (DotProd (v1, v2) / VecAbs2 (v2), v2));
-	    // 
+
 	    for (j = 0; j < ncor; j++)
 	      {
 		int nroots, nroots2, case1, case2;
@@ -363,7 +360,6 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
 		    t1 = t2;
 		  if (nroots && t1 > 0. && t1 < 1.)
 		    {
-// printf ("%g\n", t1);
 		      p =
 			VecSum (ProdScal ((1. - t1) * (1. - t1), mp1),
 				VecSum (ProdScal
@@ -478,7 +474,6 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
 		      t1 = t2;
 		    if (nroots && t1 > 0. && t1 < 1.)
 		      {
-// printf ("%g\n", t1);
 			p =
 			  VecSum (ProdScal ((1. - t1) * (1. - t1), mp1),
 				  VecSum (ProdScal
@@ -547,9 +542,8 @@ proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
 
 	      }
 	    else
-	      memset (holelin.bs, 0, sizeof (BEZIERP) * ncor);	//  draw_hole = 0;
+	      memset (holelin.bs, 0, sizeof (BEZIERP) * ncor);
 	  }
-	//if (draw_hole)
 	else
 	  for (j = 0; j < ncor; j++)
 	    {

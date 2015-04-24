@@ -13,7 +13,7 @@ probez-gtk: $(GOBJS) libprobez.so
 	gcc $(GTKLIBS) -o probez-gtk $(GOBJS) -lprobez -L.  $(LIBS)
 libprobez.so: $(LOBJS)
 	gcc --shared $(LOBJS) -o libprobez.so $(LIBS)
-%.o:%.c
+%.o:%.c probez.h
 	gcc $< -c $(QINC) -fPIC -Wextra
 window.o:window.c
 	gcc window.c -c $(GTKFLAGS) $(QINC)

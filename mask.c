@@ -45,7 +45,6 @@ mask_cyl_cyl_helper (LINEP lp, LINVEC * pts, LINVEC * prps)
       b = pts[i < 3 ? i + 1 : 0];
       nroots = intersect_lin_lin (lp.a, lp.b, a, b, t);
       memcpy (ts + nt, t, nroots * sizeof (double));
-      // ts[nt] = t[0];
       nt += nroots;
     }
   for (i = 0; i < nt; i++)
@@ -96,10 +95,10 @@ mask_cyl_cyl (P_CYLINDER * who, P_CYLINDER whom, int ncor)
       int i, j, err;
       LINVEC pts[4], perp[4], tri[3];
 
-      pts[0] = whom.l1.a;	// a;
-      pts[1] = whom.l2.a;	// b;
-      pts[2] = whom.l2.b;	// c;
-      pts[3] = whom.l1.b;	// d;
+      pts[0] = whom.l1.a;
+      pts[1] = whom.l2.a;
+      pts[2] = whom.l2.b;
+      pts[3] = whom.l1.b;
       for (i = 0; i < 4; i++)
 	{
 	  for (j = 0; j < 3; j++)
@@ -319,12 +318,6 @@ mask_sph_sph (P_SPHERE * who, P_SPHERE whom, int ncor)
   if (who->lvis > whom.lvis)
     {
       int i, j;
-
-//    for (i = 0; i < ncor; i++)  // start accelerator
-//      if (lv_pinbezpol (who->bs[i].a, whom.bs, ncor)
-//          || lv_pinbezpol (who->bs[i].b, whom.bs, ncor))
-//        break;
-//    if (i < ncor)       // dont do so (return)
       {				// end accelerator
 	for (i = 0; i < ncor; i++)
 	  if (who->bs[i].vis)
@@ -415,7 +408,6 @@ mask_mirage_cyl (P_MIRAGE who, P_CYLINDER whom, int ncor, LINVEC * pts,
 {
   int i;
 
-  // LINVEC pts[4], perp[4], tri[3];
   P_MIRAGE res;
 
   res = who;
@@ -454,7 +446,7 @@ mask_mirage_holes (P_MIRAGE who, BEZIERP * holeline, int nholes, int ncor)
 	  break;
       if (j < ncor)
 	{
-	  int k /* , l */ ;
+	  int k;
 
 	  for (k = 0; k < who.nlines; k++)
 	    if (who.lines[k].vis)
@@ -490,10 +482,10 @@ mask_sph_cyl (P_SPHERE * who, P_CYLINDER whom, int ncor, int cyl_id)
       int i, j, err;
       LINVEC pts[4], perp[4], tri[3];
 
-      pts[0] = whom.l1.a;	// a;
-      pts[1] = whom.l2.a;	// b;
-      pts[2] = whom.l2.b;	// c;
-      pts[3] = whom.l1.b;	// d;
+      pts[0] = whom.l1.a;
+      pts[1] = whom.l2.a;
+      pts[2] = whom.l2.b;
+      pts[3] = whom.l1.b;
       for (i = 0; i < 4; i++)
 	{
 	  for (j = 0; j < 3; j++)
@@ -531,17 +523,17 @@ mask_all (P_KUPA all)
   for (i = 0; i < all.ncyls; i++)
     for (j = 0; j < all.ncyls; j++)
       if (i != j)
-	  mask_cyl_cyl (all.cyls + i, all.cyls[j], all.ncor);
+	mask_cyl_cyl (all.cyls + i, all.cyls[j], all.ncor);
   for (i = 0; i < all.ncyls; i++)
     for (j = 0; j < all.nsphers; j++)
-	mask_cyl_sph (all.cyls + i, all.sphers[j], all.ncor);
+      mask_cyl_sph (all.cyls + i, all.sphers[j], all.ncor);
   for (i = 0; i < all.nsphers; i++)
     for (j = 0; j < all.nsphers; j++)
       if (i != j)
-	  mask_sph_sph (all.sphers + i, all.sphers[j], all.ncor);
+	mask_sph_sph (all.sphers + i, all.sphers[j], all.ncor);
   for (i = 0; i < all.nsphers; i++)
     for (j = 0; j < all.ncyls; j++)
-	mask_sph_cyl (all.sphers + i, all.cyls[j], all.ncor, j);
+      mask_sph_cyl (all.sphers + i, all.cyls[j], all.ncor, j);
   for (i = 0; i < all.nsphers; i++)
     {
       mask_mirage_self (all.sphers[i].mir, all.sphers[i].bs, all.ncor);

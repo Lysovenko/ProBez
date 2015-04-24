@@ -34,12 +34,9 @@ proection_cylinder (CYLINDER cyl, int ncor, VIEWPOINT VP)
   double l, beta, alpha, orient, orient2;
 
   int i;
-//, isInvisible = 0;
-
   if (cyl.type == 1)
     if (DotProd (VecIneq (VP.vp, cyl.o), cyl.n) < 0.)
       {
-//isInvisible = 1;
 	memset (&res, 0, sizeof (res));
 	return res;
       }
@@ -78,10 +75,6 @@ proection_cylinder (CYLINDER cyl, int ncor, VIEWPOINT VP)
   if (l > cyl.r)
     {
       vector n3, v1, v2, pv1, pv2;
-
-      //     LINVEC O, d1, d2;
-
-      //        BEZIERP *cir;
 
       n3 = CrossProd (cyl.n, pvp1);
       beta = cyl.r / l;
@@ -193,16 +186,16 @@ proection_cylinder (CYLINDER cyl, int ncor, VIEWPOINT VP)
       // / Lines
       v1 = ProdScal (cyl.r, v1);
       v2 = ProdScal (cyl.r, v2);
-      res.l1.a = Projection (VP, VecSum (cyl.o, v1));	// res.a;
+      res.l1.a = Projection (VP, VecSum (cyl.o, v1));
       res.sqa = start_area (res.l1.a);
-      res.l1.b = Projection (VP, VecSum (cyl.o, VecIneq (v1, longn)));	// res.d;
+      res.l1.b = Projection (VP, VecSum (cyl.o, VecIneq (v1, longn)));
       res.sqa = enlarge_area (res.sqa, res.l1.b);
       res.l1.vis = 1;
       res.l1.be = 0;
       res.l1.nbe = 0;
-      res.l2.a = Projection (VP, VecSum (cyl.o, v2));	// res.b;
+      res.l2.a = Projection (VP, VecSum (cyl.o, v2));
       res.sqa = enlarge_area (res.sqa, res.l2.a);
-      res.l2.b = Projection (VP, VecSum (cyl.o, VecIneq (v2, longn)));	// res.c;
+      res.l2.b = Projection (VP, VecSum (cyl.o, VecIneq (v2, longn)));
       res.sqa = enlarge_area (res.sqa, res.l2.b);
       if (cyl.r > 0)
 	res.l2.vis = 1;

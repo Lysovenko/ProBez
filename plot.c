@@ -31,26 +31,19 @@ lv2prp (LINVEC v)
 int
 intersection (PARBE a, PARBE b, PARBE * m)
 {
-  //PARBE ca, cb;
-
   if (a.b < b.b)
     if (b.b > a.e)
       return 0;
   if (a.b > b.b && a.b > b.e)
     return 0;
-  m->e = a.e > b.e ? a.e : b.e;	// fmax (a.e, b.e);
-  m->b = a.b < b.b ? a.b : b.b;	// fmin (a.e, b.e);
+  m->e = a.e > b.e ? a.e : b.e;
+  m->b = a.b < b.b ? a.b : b.b;
   return 1;
 }
 
 int
 par_short (PARBE * arrbe, int nbe)
 {
-  /* int i, j, n, doit; n = nbe; do { doit = 0; for (i = 0; i < n; i++) 
-   * for (j = i + 1; j < n; j++) if (intersection (arrbe[i], arrbe[j],
-   * arrbe + i)) { if (j < n - 1) memmove ((void *)( arrbe + j), (void
-   * *)( arrbe + j + 1), sizeof (PARBE) * (n - j - 1)); n--; doit = 1;
-   * } } while (doit); return n; */
   int i, j, k, n, havedo;
 
   n = nbe;
@@ -83,7 +76,7 @@ be_lin_inv (PARBE * arbe, int *np)
 {
   int size, i, j, k, Np;
   PARBE *res, med;
-  double b0;			//, ef;
+  double b0;
 
   res = 0;
   size = 0;
@@ -163,8 +156,6 @@ plot_linep_be (PrimBuf prb, LINEP lp)
 
   res = prb;
   for (i = 0; i < lp.nbe; i++)
-    // res = m_bezier_cut (res, bp.a, bp.b, bp.c, bp.be[i].b,
-    // bp.be[i].e);
     res =
       pri_line (res,
 		lv2prp (lv_sum
@@ -227,8 +218,6 @@ plot_proection_cylinder (PrimBuf pb, P_CYLINDER syl, int ncor)
       else
 	res = plot_linep (res, syl.l1);
     }
-  // res = pri_line (res, lv2prp (syl.l1.a), lv2prp (syl.l1.b),
-  // 0x000000);
   if (syl.l2.vis)
     {
       if (syl.l2.nbe)
@@ -240,8 +229,6 @@ plot_proection_cylinder (PrimBuf pb, P_CYLINDER syl, int ncor)
       else
 	res = plot_linep (res, syl.l2);
     }
-  // res = pri_line (res, lv2prp (syl.l2.a), lv2prp (syl.l2.b),
-  // 0x000000);
   return res;
 }
 
@@ -318,7 +305,6 @@ plot_projection_all (PrimBuf pb, P_KUPA all)
   int i;
 
   res = pb;
-  // fprintf(stderr,"%d %d\n",all.nsphers,all.ncyls);
   for (i = 0; i < all.nsphers; i++)
     res = plot_proection_sphere (res, all.sphers[i], all.ncor);
   for (i = 0; i < all.ncyls; i++)
