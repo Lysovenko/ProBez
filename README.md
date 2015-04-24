@@ -1,4 +1,24 @@
-Interface to manipulate with 3d gragic,s reading initial data fron an XML file, created by user which represents 3d model and saves data in vectorized format.
-[[project_screenshots]]
-[[project_admins]]
-[[download_button]]
+ProBez
+======
+
+Somtimes publications require 3D models to be shown.
+Modern visualisation utilities mostly use raster graphics.
+In the same time many models can be displayed as set of lines and Bezier curves.
+The ProBez project intendend to create software, which will approximate some 3D models (e.g. molecules) with lines and Bezier curves.
+
+Requires
+========
+* GTK+-2.0 library and headers
+* [vmath](http://github.com/Lysovenko/vmath)
+* [pgl](http://github.com/Lysovenko/pgl)
+
+Installation
+============
+
+Compile sources with *make* place *probez-gtk* int the search path of executables and *libprobez.so* - in the search path of libraries ;-)
+
+Using
+=====
+
+Wait couple of weeks while it become usable ;-)
+The repo is supplied by an examples of a models. Just open a model and drugg mouse on the program's window.

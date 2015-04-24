@@ -1,6 +1,5 @@
 *~
 *.o
-*.xml
 probez-gtk
 *.so
 TAGS

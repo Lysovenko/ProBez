@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<multibox>
+<box>
+ 
+<sphere><center>-0.842 -1 -0.694</center><radius>.1</radius></sphere>
+<sphere><center>0.842 -1 0.694</center><radius>.1</radius></sphere>
+<sphere><center>0.158 -1 0.694</center><radius>.1</radius></sphere>
+<sphere><center>-0.158 -1 -0.694</center><radius>.1</radius></sphere>
+<sphere><center>-0.842 0 0.306</center><radius>.1</radius></sphere>
+<sphere><center>0.842 0 -0.306</center><radius>.1</radius></sphere>
+<sphere><center>0.158 0 -0.306</center><radius>.1</radius></sphere>
+<sphere><center>-0.158 0 0.306</center><radius>.1</radius></sphere>
+</box>
+</multibox>
