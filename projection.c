@@ -26,7 +26,7 @@
 #define Allocator(x) assert(x)
 
 SQRAREA
-start_area (LINVEC st)
+start_area (LinVec st)
 {
   SQRAREA res;
 
@@ -36,7 +36,7 @@ start_area (LINVEC st)
 }
 
 SQRAREA
-enlarge_area (SQRAREA in, LINVEC en)
+enlarge_area (SQRAREA in, LinVec en)
 {
   SQRAREA res;
 
@@ -47,14 +47,14 @@ enlarge_area (SQRAREA in, LINVEC en)
   return res;
 }
 
-PARBE *
-add_be (PARBE * arr, double b, double e, int *nbe)
+ParBE *
+add_be (ParBE * arr, double b, double e, int *nbe)
 {
-  PARBE *res;
+  ParBE *res;
   int narr;
 
   narr = *nbe;
-  Allocator (res = realloc (arr, (narr + 1) * sizeof (PARBE)));
+  Allocator (res = realloc (arr, (narr + 1) * sizeof (ParBE)));
   res[narr].b = b;
   res[narr].e = e;
   narr++;
@@ -90,10 +90,10 @@ Poligon (vector O, vector norm, double rpol, int ndot)
 }
 
 /**projection to plane*/
-LINVEC
+LinVec
 Projection (Viewpoint vp, vector v)
 {
-  LINVEC res;
+  LinVec res;
   double K;
 
   K = vp.Z / (vp.vp.z - v.z);
@@ -103,7 +103,7 @@ Projection (Viewpoint vp, vector v)
 }
 
 double
-alph (LINVEC lv)
+alph (LinVec lv)
 {
   double av, s, c;
 
@@ -140,12 +140,12 @@ project_all (const Elements3D * all, tensor tens, int ncor,
   for (i = 0; i < all->nsphers; i++)
     {
       Sphere sph;
-      HOLE *holes;
+      Hole *holes;
       int j;
 
       sph = all->sphers[i];
-      Allocator (holes = malloc (sizeof (HOLE) * sph.nh));
-      memcpy (holes, sph.holes, sizeof (HOLE) * sph.nh);
+      Allocator (holes = malloc (sizeof (Hole) * sph.nh));
+      memcpy (holes, sph.holes, sizeof (Hole) * sph.nh);
       sph.holes = holes;
       sph.o = NewVector (sph.o, tens);
       for (j = 0; j < sph.nh; j++)
@@ -259,7 +259,7 @@ kupa3d_del (Elements3D k3d)
 }
 
 void
-kupas3d_del (KUPAS3D ks3d)
+kupas3d_del (Sets3D ks3d)
 {
   int i;
 

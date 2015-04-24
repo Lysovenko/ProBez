@@ -43,14 +43,14 @@ interspher_cyl (Sphere * sph1, Sphere * sph2, double r, int cyl_id, int type)
   res.n = ProdScal (1. / l, nap);
   res.o = VecIneq (sph1->o, ProdScal (r1, res.n));
   res.l = l - r1 - r2;
-  sph2->holes = realloc (sph2->holes, (sph2->nh + 1) * sizeof (HOLE));
+  sph2->holes = realloc (sph2->holes, (sph2->nh + 1) * sizeof (Hole));
   sph2->holes[sph2->nh].n = res.n;
   sph2->holes[sph2->nh].o = VecSum (sph2->o, ProdScal (r2, res.n));
   sph2->holes[sph2->nh].r = r;
   sph2->holes[sph2->nh].figure = FIG_CYLINDER;
   sph2->holes[sph2->nh].fig_id = cyl_id;
   sph2->nh++;
-  sph1->holes = realloc (sph1->holes, (sph1->nh + 1) * sizeof (HOLE));
+  sph1->holes = realloc (sph1->holes, (sph1->nh + 1) * sizeof (Hole));
   sph1->holes[sph1->nh].n = ProdScal (-1., res.n);
   sph1->holes[sph1->nh].o = res.o;
   sph1->holes[sph1->nh].r = r;
@@ -441,12 +441,12 @@ parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
   return res;
 }
 
-KUPAS3D
+Sets3D
 interpret_kupas3d_xml (char *docname)
 {
   xmlDocPtr doc;
   xmlNodePtr cur;
-  KUPAS3D res;
+  Sets3D res;
 
   memset (&res, 0, sizeof (res));
   doc = xmlParseFile (docname);

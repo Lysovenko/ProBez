@@ -36,16 +36,16 @@ typedef struct
 {
   vector a, b;
   char mode;
-} LINE3D;
+} Line3D;
 
 typedef struct
 {
   double b, e;
-} PARBE;
+} ParBE;
 typedef struct
 {
   double x, y;
-} LINVEC;
+} LinVec;
 
 /* elements of 3d graphics */
 typedef struct
@@ -59,27 +59,27 @@ typedef struct
   vector n, o;
   double r;
   int figure, fig_id;
-} HOLE;
+} Hole;
 typedef struct
 {
   vector o;
   double r;
   int nh, mir_id;
-  HOLE *holes;
+  Hole *holes;
 } Sphere;
 
 typedef struct
 {
   vector a, b;
-} LINE;
+} Line;
 typedef struct
 {
   vector a, b, c;
-} BEZIER;
+} SBezier;
 typedef struct
 {
-  LINE *lines;
-  BEZIER *beziers;
+  Line *lines;
+  SBezier *beziers;
   int nlines, nbeziers, id, isRotate;
 } Mirage;
 typedef struct
@@ -94,10 +94,10 @@ typedef struct
   Elements3D *kupas;
   Mirage *mirages;
   int nkupas, nmirages;
-} KUPAS3D;
+} Sets3D;
 typedef struct
 {
-  KUPAS3D ks3d;
+  Sets3D ks3d;
   int position;
 } KUPOS;
 /* projections */
@@ -107,17 +107,17 @@ typedef struct
 } SQRAREA;
 typedef struct
 {
-  LINVEC a, b;
+  LinVec a, b;
   char vis;
   int nbe;
-  PARBE *be;
+  ParBE *be;
 } LINEP;
 typedef struct
 {
-  LINVEC a, b, c;
+  LinVec a, b, c;
   char vis;
   int nbe;
-  PARBE *be;
+  ParBE *be;
 } BEZIERP;
 typedef struct
 {
@@ -127,7 +127,7 @@ typedef struct
 } P_MIRAGE;
 typedef struct
 {
-  LINVEC a, b;
+  LinVec a, b;
   double lv1, lv2;
   BEZIERP *b1, *b2;
   LINEP l1, l2;
@@ -158,54 +158,54 @@ typedef struct
 
 /* methods */
 vector *Poligon (vector O, vector norm, double rpol, int ndot);
-double alph (LINVEC lv);
-LINVEC Projection (Viewpoint, vector v);
-PARBE *add_be (PARBE * arr, double b, double e, int *nbe);
+double alph (LinVec lv);
+LinVec Projection (Viewpoint, vector v);
+ParBE *add_be (ParBE * arr, double b, double e, int *nbe);
 /* math */
-int m_bez_lin_intersection (LINVEC A, LINVEC B, LINVEC C, LINVEC E, LINVEC F,
+int m_bez_lin_intersection (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
 			    double *t1, double *u1, double *t2, double *u2);
-double lv_prod (LINVEC a, LINVEC b);
-LINVEC lv_ineq (LINVEC a, LINVEC b);
-LINVEC lv_sum (LINVEC a, LINVEC b);
-LINVEC lv_scal (double a, LINVEC b);
+double lv_prod (LinVec a, LinVec b);
+LinVec lv_ineq (LinVec a, LinVec b);
+LinVec lv_sum (LinVec a, LinVec b);
+LinVec lv_scal (double a, LinVec b);
 int m_bez_plan_intersection (vector A, vector B, vector C, vector O, vector N,
 			     double *t1, double *t2);
-LINVEC lv_tri_per (LINVEC A, LINVEC B, LINVEC C, int *err);
-int lv_pinpol (LINVEC pt, LINVEC * per, int sper, LINVEC * os, int so,
+LinVec lv_tri_per (LinVec A, LinVec B, LinVec C, int *err);
+int lv_pinpol (LinVec pt, LinVec * per, int sper, LinVec * os, int so,
 	       int pers);
-int lv_pinbezpol (LINVEC pt, BEZIERP * ABC, int ncor);
-int lv_bez_lin_inters (LINVEC A, LINVEC B, LINVEC C, LINVEC E, LINVEC F,
+int lv_pinbezpol (LinVec pt, BEZIERP * ABC, int ncor);
+int lv_bez_lin_inters (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
 		       double *t1, double *t2);
-int intersect_lin_lin (LINVEC a1, LINVEC b1, LINVEC a2, LINVEC b2,
+int intersect_lin_lin (LinVec a1, LinVec b1, LinVec a2, LinVec b2,
 		       double *ts);
-int intersect_lin_bsect (LINVEC la, LINVEC lb, LINVEC ba, LINVEC bb,
-			 LINVEC bc, double *ts);
-int intersect_bsect_lin (LINVEC ba, LINVEC bb, LINVEC bc, LINVEC la,
-			 LINVEC lb, double *ts);
-LINVEC m_bezier_point (LINVEC a, LINVEC b, LINVEC c, double t);
-PrimBuf m_bezier_cut (PrimBuf prb, LINVEC a, LINVEC b, LINVEC c, double t1,
+int intersect_lin_bsect (LinVec la, LinVec lb, LinVec ba, LinVec bb,
+			 LinVec bc, double *ts);
+int intersect_bsect_lin (LinVec ba, LinVec bb, LinVec bc, LinVec la,
+			 LinVec lb, double *ts);
+LinVec m_bezier_point (LinVec a, LinVec b, LinVec c, double t);
+PrimBuf m_bezier_cut (PrimBuf prb, LinVec a, LinVec b, LinVec c, double t1,
 		      double t2);
 vector ArbPer (vector norm);
-int intersect_bsect_bsect (LINVEC ba, LINVEC bb, LINVEC bc,
-			   LINVEC ba2, LINVEC bb2, LINVEC bc2,
+int intersect_bsect_bsect (LinVec ba, LinVec bb, LinVec bc,
+			   LinVec ba2, LinVec bb2, LinVec bc2,
 			   double *ts, int nst);
 /* PROJECTION */
-SQRAREA start_area (LINVEC st);
-SQRAREA enlarge_area (SQRAREA in, LINVEC en);
+SQRAREA start_area (LinVec st);
+SQRAREA enlarge_area (SQRAREA in, LinVec en);
 P_CYLINDER proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP);
 P_SPHERE proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 			   Mirage * init_mirages, tensor * tens);
-pr_point lv2prp (LINVEC v);
+pr_point lv2prp (LinVec v);
 
 Elements3D interpret_3dvl (FILE * fp);
 Elements3D interpret_3d_xml (char *docname);
-KUPAS3D interpret_kupas3d_xml (char *docname);
+Sets3D interpret_kupas3d_xml (char *docname);
 PrimBuf plot_projection_all (PrimBuf pb, P_KUPA all);
 P_KUPA project_all (const Elements3D * all, tensor tens, int ncor,
 		    const Viewpoint * VP);
 void mask_all (P_KUPA all);
 void kupa3d_del (Elements3D k3d);
-void kupas3d_del (KUPAS3D ks3d);
+void kupas3d_del (Sets3D ks3d);
 PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
 			 const tensor * tens);
 /*====================*/

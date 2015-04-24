@@ -53,35 +53,35 @@ ArbPer (vector norm)		// arbitrary perpendicular
 }
 
 double
-lv_prod (LINVEC a, LINVEC b)
+lv_prod (LinVec a, LinVec b)
 {
   return a.x * b.x + a.y * b.y;
 }
 
-LINVEC
-lv_ineq (LINVEC a, LINVEC b)
+LinVec
+lv_ineq (LinVec a, LinVec b)
 {
-  LINVEC res;
+  LinVec res;
 
   res.x = a.x - b.x;
   res.y = a.y - b.y;
   return res;
 }
 
-LINVEC
-lv_sum (LINVEC a, LINVEC b)
+LinVec
+lv_sum (LinVec a, LinVec b)
 {
-  LINVEC res;
+  LinVec res;
 
   res.x = a.x + b.x;
   res.y = a.y + b.y;
   return res;
 }
 
-LINVEC
-lv_scal (double a, LINVEC b)
+LinVec
+lv_scal (double a, LinVec b)
 {
-  LINVEC res;
+  LinVec res;
 
   res.x = a * b.x;
   res.y = a * b.y;
@@ -89,25 +89,25 @@ lv_scal (double a, LINVEC b)
 }
 
 double
-lv_abs2 (LINVEC v)
+lv_abs2 (LinVec v)
 {
   return v.x * v.x + v.y * v.y;
 }
 
-LINVEC
-lv_arb_per (LINVEC lv)
+LinVec
+lv_arb_per (LinVec lv)
 {
-  LINVEC res;
+  LinVec res;
 
   res.x = -lv.y;
   res.y = lv.x;
   return res;
 }
 
-LINVEC
-lv_tri_per (LINVEC A, LINVEC B, LINVEC C, int *err)
+LinVec
+lv_tri_per (LinVec A, LinVec B, LinVec C, int *err)
 {
-  LINVEC ac, ab, ad;
+  LinVec ac, ab, ad;
   double ab2;
 
   *err = 0;
@@ -121,11 +121,11 @@ lv_tri_per (LINVEC A, LINVEC B, LINVEC C, int *err)
 }
 
 int
-lv_bez_lin_inters (LINVEC A, LINVEC B, LINVEC C, LINVEC la, LINVEC lb,
+lv_bez_lin_inters (LinVec A, LinVec B, LinVec C, LinVec la, LinVec lb,
 		   double *t1, double *t2)
 {
   double va, vb, vc, vo, a, b, c;
-  LINVEC N;
+  LinVec N;
 
   N = lv_arb_per (lv_ineq (la, lb));
   va = lv_prod (A, N);
@@ -139,9 +139,9 @@ lv_bez_lin_inters (LINVEC A, LINVEC B, LINVEC C, LINVEC la, LINVEC lb,
 }
 
 double
-lv_u4plane (LINVEC A, LINVEC B, LINVEC P)
+lv_u4plane (LinVec A, LinVec B, LinVec P)
 {
-  LINVEC AP, AB;
+  LinVec AP, AB;
   double sig, ap2, ab2;
 
   AP = lv_ineq (P, A);
@@ -154,7 +154,7 @@ lv_u4plane (LINVEC A, LINVEC B, LINVEC P)
 }
 
 int
-intersect_lin_bsect (LINVEC la, LINVEC lb, LINVEC ba, LINVEC bb, LINVEC bc,
+intersect_lin_bsect (LinVec la, LinVec lb, LinVec ba, LinVec bb, LinVec bc,
 		     double *ts)
 {
   int nroots, res;
@@ -191,7 +191,7 @@ intersect_lin_bsect (LINVEC la, LINVEC lb, LINVEC ba, LINVEC bb, LINVEC bc,
 }
 
 int
-intersect_bsect_lin (LINVEC ba, LINVEC bb, LINVEC bc, LINVEC la, LINVEC lb,
+intersect_bsect_lin (LinVec ba, LinVec bb, LinVec bc, LinVec la, LinVec lb,
 		     double *ts)
 {
   int nroots, res;
@@ -228,8 +228,8 @@ intersect_bsect_lin (LINVEC ba, LINVEC bb, LINVEC bc, LINVEC la, LINVEC lb,
 }
 
 int
-intersect_bsect_bsect (LINVEC ba, LINVEC bb, LINVEC bc, LINVEC ba2,
-		       LINVEC bb2, LINVEC bc2, double *ts, int nst)
+intersect_bsect_bsect (LinVec ba, LinVec bb, LinVec bc, LinVec ba2,
+		       LinVec bb2, LinVec bc2, double *ts, int nst)
 {
   double pos, stp, out[2];
   int size = 0, i, j;
@@ -239,7 +239,7 @@ intersect_bsect_bsect (LINVEC ba, LINVEC bb, LINVEC bc, LINVEC ba2,
   for (i = 0; i < nst; i++)
     {
       int nroots;
-      LINVEC la, lb;
+      LinVec la, lb;
 
       la = m_bezier_point (ba, bb, bc, pos);
       lb = m_bezier_point (ba, bb, bc, pos + stp);
@@ -255,10 +255,10 @@ intersect_bsect_bsect (LINVEC ba, LINVEC bb, LINVEC bc, LINVEC ba2,
 }
 
 int
-intersect_lin_lin (LINVEC a1, LINVEC b1, LINVEC a2, LINVEC b2, double *ts)
+intersect_lin_lin (LinVec a1, LinVec b1, LinVec a2, LinVec b2, double *ts)
 {
   double on, an, bn, z;
-  LINVEC N;
+  LinVec N;
 
   N = lv_ineq (b2, a2);
   N = lv_arb_per (N);
@@ -275,7 +275,7 @@ intersect_lin_lin (LINVEC a1, LINVEC b1, LINVEC a2, LINVEC b2, double *ts)
 }
 
 int
-lv_pinpol (LINVEC pt, LINVEC * per, int sper, LINVEC * os, int so, int pers)
+lv_pinpol (LinVec pt, LinVec * per, int sper, LinVec * os, int so, int pers)
 {
   int i;
 
@@ -286,7 +286,7 @@ lv_pinpol (LINVEC pt, LINVEC * per, int sper, LINVEC * os, int so, int pers)
 }
 
 int
-lv_pinbezpol (LINVEC pt, BEZIERP * ABC, int ncor)
+lv_pinbezpol (LinVec pt, BEZIERP * ABC, int ncor)
 {
   int i;
   double ts[2];
@@ -317,15 +317,15 @@ m_bez_plan_intersection (vector A, vector B, vector C, vector O, vector N,
   return gsl_poly_solve_quadratic (a, b, c, t1, t2);
 }
 
-LINVEC
-m_bezier_point (LINVEC a, LINVEC b, LINVEC c, double t)
+LinVec
+m_bezier_point (LinVec a, LinVec b, LinVec c, double t)
 {
   return lv_sum (lv_scal ((1. - t) * (1. - t), a),
 		 lv_sum (lv_scal (2. * t * (1. - t), b), lv_scal (t * t, c)));
 }
 
-LINVEC
-m_bezier_grad (LINVEC a, LINVEC b, LINVEC c, double t)
+LinVec
+m_bezier_grad (LinVec a, LinVec b, LinVec c, double t)
 {
   return lv_sum (lv_scal ((2. * t - 2.), a),
 		 lv_sum (lv_scal (2. * (1. - 2. * t), b),
@@ -333,9 +333,9 @@ m_bezier_grad (LINVEC a, LINVEC b, LINVEC c, double t)
 }
 
 PrimBuf
-m_bezier_cut (PrimBuf prb, LINVEC a, LINVEC b, LINVEC c, double t1, double t2)
+m_bezier_cut (PrimBuf prb, LinVec a, LinVec b, LinVec c, double t1, double t2)
 {
-  LINVEC oa, ob, oc;
+  LinVec oa, ob, oc;
 
   oa = m_bezier_point (a, b, c, t1);
   oc = m_bezier_point (a, b, c, t2);
@@ -347,7 +347,7 @@ m_bezier_cut (PrimBuf prb, LINVEC a, LINVEC b, LINVEC c, double t1, double t2)
 }
 
 int
-m_bez_lin_intersection (LINVEC A, LINVEC B, LINVEC C, LINVEC E, LINVEC F,
+m_bez_lin_intersection (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
 			double *t1, double *u1, double *t2, double *u2)
 {
   double Z, a, b, c, X[2], U[2];

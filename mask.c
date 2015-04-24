@@ -29,7 +29,7 @@ static BEZIERP mask_sph_sph_helper (BEZIERP bp, BEZIERP * ABC, int ncor,
 
 /* Help function for next only ;) */
 static LINEP
-mask_cyl_cyl_helper (LINEP lp, LINVEC * pts, LINVEC * prps)
+mask_cyl_cyl_helper (LINEP lp, LinVec * pts, LinVec * prps)
 {
   int i, j, nt = 0;
   double m, start, ts[4], t[2];
@@ -38,7 +38,7 @@ mask_cyl_cyl_helper (LINEP lp, LINVEC * pts, LINVEC * prps)
   res = lp;
   for (i = 0; i < 4; i++)
     {
-      LINVEC a, b;
+      LinVec a, b;
       int nroots;
 
       a = pts[i];
@@ -86,14 +86,14 @@ mask_cyl_cyl_helper (LINEP lp, LINVEC * pts, LINVEC * prps)
   return res;
 }
 
-static BEZIERP mask_sph_cyl_helper (BEZIERP bp, LINVEC * pts, LINVEC * prps);
+static BEZIERP mask_sph_cyl_helper (BEZIERP bp, LinVec * pts, LinVec * prps);
 void
 mask_cyl_cyl (P_CYLINDER * who, P_CYLINDER whom, int ncor)
 {
   if (who->lvis > whom.lvis)
     {
       int i, j, err;
-      LINVEC pts[4], perp[4], tri[3];
+      LinVec pts[4], perp[4], tri[3];
 
       pts[0] = whom.l1.a;
       pts[1] = whom.l2.a;
@@ -349,7 +349,7 @@ mask_sph_sph (P_SPHERE * who, P_SPHERE whom, int ncor)
 
 /* Help function for next only ;) */
 static BEZIERP
-mask_sph_cyl_helper (BEZIERP bp, LINVEC * pts, LINVEC * prps)
+mask_sph_cyl_helper (BEZIERP bp, LinVec * pts, LinVec * prps)
 {
   int i, j, nt = 0, nroots;
   double ts[4], tsr[2], m, start /* , end */ ;
@@ -357,7 +357,7 @@ mask_sph_cyl_helper (BEZIERP bp, LINVEC * pts, LINVEC * prps)
 
   for (i = 0; i < 4; i++)
     {
-      LINVEC a, b;
+      LinVec a, b;
 
       a = pts[i];
       b = pts[i < 3 ? i + 1 : 0];
@@ -403,8 +403,8 @@ mask_sph_cyl_helper (BEZIERP bp, LINVEC * pts, LINVEC * prps)
 }
 
 P_MIRAGE
-mask_mirage_cyl (P_MIRAGE who, P_CYLINDER whom, int ncor, LINVEC * pts,
-		 LINVEC * perp)
+mask_mirage_cyl (P_MIRAGE who, P_CYLINDER whom, int ncor, LinVec * pts,
+		 LinVec * perp)
 {
   int i;
 
@@ -480,7 +480,7 @@ mask_sph_cyl (P_SPHERE * who, P_CYLINDER whom, int ncor, int cyl_id)
   if (who->lvis > whom.lvis)
     {
       int i, j, err;
-      LINVEC pts[4], perp[4], tri[3];
+      LinVec pts[4], perp[4], tri[3];
 
       pts[0] = whom.l1.a;
       pts[1] = whom.l2.a;

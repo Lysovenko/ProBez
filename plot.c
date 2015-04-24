@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include "probez.h"
 pr_point
-lv2prp (LINVEC v)
+lv2prp (LinVec v)
 {
   pr_point res;
 
@@ -29,7 +29,7 @@ lv2prp (LINVEC v)
 }
 
 int
-intersection (PARBE a, PARBE b, PARBE * m)
+intersection (ParBE a, ParBE b, ParBE * m)
 {
   if (a.b < b.b)
     if (b.b > a.e)
@@ -42,7 +42,7 @@ intersection (PARBE a, PARBE b, PARBE * m)
 }
 
 int
-par_short (PARBE * arrbe, int nbe)
+par_short (ParBE * arrbe, int nbe)
 {
   int i, j, k, n, havedo;
 
@@ -71,11 +71,11 @@ par_short (PARBE * arrbe, int nbe)
 
 }
 
-PARBE *
-be_lin_inv (PARBE * arbe, int *np)
+ParBE *
+be_lin_inv (ParBE * arbe, int *np)
 {
   int size, i, j, k, Np;
-  PARBE *res, med;
+  ParBE *res, med;
   double b0;
 
   res = 0;
@@ -106,7 +106,7 @@ be_lin_inv (PARBE * arbe, int *np)
     {
       if (arbe[i].b > b0)
 	{
-	  res = realloc (res, (size + 1) * sizeof (PARBE));
+	  res = realloc (res, (size + 1) * sizeof (ParBE));
 	  res[size].b = b0;
 	  res[size].e = arbe[i].b;
 	  size++;
@@ -117,7 +117,7 @@ be_lin_inv (PARBE * arbe, int *np)
 
   if (b0 < 1.)
     {
-      res = realloc (res, (size + 1) * sizeof (PARBE));
+      res = realloc (res, (size + 1) * sizeof (ParBE));
       res[size].b = b0;
       res[size].e = 1.;
       size++;
