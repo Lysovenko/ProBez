@@ -177,7 +177,7 @@ SQRAREA start_area (LINVEC st);
 SQRAREA enlarge_area (SQRAREA in, LINVEC en);
 P_CYLINDER proection_cylinder (CYLINDER cyl, int ncor, VIEWPOINT VP);
 P_SPHERE proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
-			   MIRAGE * init_mirages);
+			   MIRAGE * init_mirages, tensor * tens);
 // /////
 pr_point lv2prp (LINVEC v);
 ///
@@ -185,10 +185,13 @@ KUPA3D interpret_3dvl (FILE * fp);
 KUPA3D interpret_3d_xml (char *docname);
 KUPAS3D interpret_kupas3d_xml (char *docname);
 PrimBuf plot_projection_all (PrimBuf pb, P_KUPA all);
-P_KUPA project_all (KUPA3D all, tensor tens, int ncor, VIEWPOINT VP);
+P_KUPA project_all (const KUPA3D * all, tensor tens, int ncor,
+		    const VIEWPOINT * VP);
 void mask_all (P_KUPA all);
 void kupa3d_del (KUPA3D k3d);
 void kupas3d_del (KUPAS3D ks3d);
+PrimBuf image_generator (const KUPA3D * k3d, const VIEWPOINT * VP,
+			 tensor tens);
 /*====================*/
 void InitRequests ();
 void *GetRequest (int n);

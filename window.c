@@ -30,7 +30,7 @@ typedef struct
   int x, y;
 } POINT;
 static POINT PrevMousePoint;
-pr_scale ext_psc;
+static pr_scale ext_psc;
 static pr_real ext_W = 1.4;
 void interactive_dialog_clicked ();
 static gboolean
@@ -83,6 +83,18 @@ scribble_button_press_event (GtkWidget * widget,
   return TRUE;
 }
 
+void
+visualization_generator (tensor tens)
+{
+  PrimBuf prb = NULL;
+  const KUPA3D *k3d = GetRequest (KUPA_3D);
+  const VIEWPOINT *VP = GetRequest (PT_OF_V);
+  prb = image_generator (k3d, VP, tens);
+  if (GetRequest (PRIMITIVES))
+    free (GetRequest (PRIMITIVES));
+  SetRequest (PRIMITIVES, prb);
+}
+
 static gboolean
 scribble_motion_notify_event (GtkWidget * widget,
 			      GdkEventMotion * event, gpointer data)
@@ -119,7 +131,7 @@ Delete (GtkWidget * widget, gpointer * data)
 }
 
 static void
-fill_menu (GtkWidget *window, GtkWidget * MenuBar)
+fill_menu (GtkWidget * window, GtkWidget * MenuBar)
 {
   GtkWidget *FileMenu, *open_item, *file_item,
     *view_item, *point_plane_item, *save2post_item, *ViewMenu, *exit_item,

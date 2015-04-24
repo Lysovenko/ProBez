@@ -423,7 +423,7 @@ ps_to_file2 (GtkButton * button, gpointer user_data)
 
 	    tens = GetRequest (TENS);
 	    fprintf (stderr, "running :)\n");
-	    pk = project_all (*k3d, *tens, 16, VP1);
+	    pk = project_all (k3d, *tens, 16, &VP1);
 	    mask_all (pk);
 	    prb = pri_init (2., 2.);
 	    prb = plot_projection_all (prb, pk);
@@ -431,7 +431,7 @@ ps_to_file2 (GtkButton * button, gpointer user_data)
 	    if (prb != NULL)
 	      prp_step_by_step_ps (fp, psc, prb);
 	    free (prb);
-	    pk = project_all (*k3d, *tens, 8, VP2);
+	    pk = project_all (k3d, *tens, 8, &VP2);
 	    mask_all (pk);
 	    prb = pri_init (2., 2.);
 	    prb = plot_projection_all (prb, pk);

@@ -208,20 +208,6 @@ proection_cylinder (CYLINDER cyl, int ncor, VIEWPOINT VP)
 	res.l2.vis = 1;
       res.l2.be = 0;
       res.l2.nbe = 0;
-      /* if(orient > 0.) */
-      /* { */
-      /*   //      O = Projection(VP, VecIneq(cyl.o, longn)); */
-      /*   //      cir = res.b2; */
-      /*   //      d1 = res.l2.b;    // res.c; */
-      /*   //      d2 = res.l1.b;    // res.d; */
-      /* } */
-      /* if(orient < 0.) */
-      /* { */
-      /*   //      O = Projection(VP, cyl.o); */
-      /*   //      cir = res.b1; */
-      /*   //      d1 = res.a; */
-      /*   //      d2 = res.b; */
-      /* } */
     }
   else
     {

@@ -25,7 +25,8 @@
 #include <assert.h>
 #define Allocator(x) assert(x)
 
-SQRAREA start_area (LINVEC st)
+SQRAREA
+start_area (LINVEC st)
 {
   SQRAREA res;
 
@@ -34,7 +35,8 @@ SQRAREA start_area (LINVEC st)
   return res;
 }
 
-SQRAREA enlarge_area (SQRAREA in, LINVEC en)
+SQRAREA
+enlarge_area (SQRAREA in, LINVEC en)
 {
   SQRAREA res;
 
@@ -45,7 +47,8 @@ SQRAREA enlarge_area (SQRAREA in, LINVEC en)
   return res;
 }
 
-PARBE *add_be (PARBE * arr, double b, double e, int *nbe)
+PARBE *
+add_be (PARBE * arr, double b, double e, int *nbe)
 {
   PARBE *res;
   int narr;
@@ -63,7 +66,8 @@ PARBE *add_be (PARBE * arr, double b, double e, int *nbe)
  * Makes poligon arround point O in plane with normal vector 'norm',
  * radius 'rpol' and 'ndot' corners 
  */
-vector *Poligon (vector O, vector norm, double rpol, int ndot)
+vector *
+Poligon (vector O, vector norm, double rpol, int ndot)
 {
   vector *res;
   int i;
@@ -74,19 +78,20 @@ vector *Poligon (vector O, vector norm, double rpol, int ndot)
   cosa = cos (2. * M_PI / (double) ndot);
   sina = sin (2. * M_PI / (double) ndot);
   for (i = 1; i < ndot; i++)
-  {
-    vector Y;
+    {
+      vector Y;
 
-    Y = CrossProd (norm, res[i - 1]);
-    res[i] = VecSum (ProdScal (cosa, res[i - 1]), ProdScal (sina, Y));
-  }
+      Y = CrossProd (norm, res[i - 1]);
+      res[i] = VecSum (ProdScal (cosa, res[i - 1]), ProdScal (sina, Y));
+    }
   for (i = 0; i < ndot; i++)
     res[i] = VecSum (ProdScal (rpol, res[i]), O);
   return res;
 }
 
 /**projection to plane*/
-LINVEC Projection (VIEWPOINT vp, vector v)
+LINVEC
+Projection (VIEWPOINT vp, vector v)
 {
   LINVEC res;
   double K;
@@ -97,7 +102,8 @@ LINVEC Projection (VIEWPOINT vp, vector v)
   return res;
 }
 
-double alph (LINVEC lv)
+double
+alph (LINVEC lv)
 {
   double av, s, c;
 
@@ -110,81 +116,87 @@ double alph (LINVEC lv)
     return 2. * M_PI - acos (c);
 }
 
-P_KUPA project_all (KUPA3D all, tensor tens, int ncor, VIEWPOINT VP)
+P_KUPA
+project_all (const KUPA3D * all, tensor tens, int ncor, const VIEWPOINT * VP)
 {
   int i;
   P_KUPA res;
 
   res.ncor = ncor;
-  res.ncyls = all.ncyls;
+  res.ncyls = all->ncyls;
   Allocator (res.cyls = calloc (res.ncyls, sizeof (P_CYLINDER)));
-  for (i = 0; i < all.ncyls; i++)
-  {
-    CYLINDER cyl;
-
-    cyl = all.cyls[i];
-    cyl.o = NewVector (cyl.o, tens);
-    cyl.n = NewVector (cyl.n, tens);
-    res.cyls[i] = proection_cylinder (cyl, ncor, VP);
-  }
-  res.nsphers = all.nsphers;
-  Allocator (res.sphers = calloc (res.nsphers, sizeof (P_SPHERE)));
-  for (i = 0; i < all.nsphers; i++)
-  {
-    SPHERE sph;
-    HOLE *holes;
-    int j;
-
-    sph = all.sphers[i];
-    Allocator (holes = malloc (sizeof (HOLE) * sph.nh));
-    memcpy (holes, sph.holes, sizeof (HOLE) * sph.nh);
-    sph.holes = holes;
-    sph.o = NewVector (sph.o, tens);
-    for (j = 0; j < sph.nh; j++)
+  for (i = 0; i < all->ncyls; i++)
     {
-      sph.holes[j].o = NewVector (sph.holes[j].o, tens);
-      sph.holes[j].n = NewVector (sph.holes[j].n, tens);
+      CYLINDER cyl;
+
+      cyl = all->cyls[i];
+      cyl.o = NewVector (cyl.o, tens);
+      cyl.n = NewVector (cyl.n, tens);
+      res.cyls[i] = proection_cylinder (cyl, ncor, *VP);
     }
-    res.sphers[i] = proection_sphere (sph, ncor, VP, all.mirages);
-    free (holes);
-  }
+  res.nsphers = all->nsphers;
+  Allocator (res.sphers = calloc (res.nsphers, sizeof (P_SPHERE)));
+  for (i = 0; i < all->nsphers; i++)
+    {
+      SPHERE sph;
+      HOLE *holes;
+      int j;
+
+      sph = all->sphers[i];
+      Allocator (holes = malloc (sizeof (HOLE) * sph.nh));
+      memcpy (holes, sph.holes, sizeof (HOLE) * sph.nh);
+      sph.holes = holes;
+      sph.o = NewVector (sph.o, tens);
+      for (j = 0; j < sph.nh; j++)
+	{
+	  sph.holes[j].o = NewVector (sph.holes[j].o, tens);
+	  sph.holes[j].n = NewVector (sph.holes[j].n, tens);
+	}
+      res.sphers[i] = proection_sphere (sph, ncor, *VP, all->mirages, &tens);
+      free (holes);
+    }
   return res;
 }
 
-void bezierp_destruct (BEZIERP b)
+void
+bezierp_destruct (BEZIERP b)
 {
   if (b.nbe)
     free (b.be);
 }
 
-void linep_destruct (LINEP l)
+void
+linep_destruct (LINEP l)
 {
   if (l.nbe)
     free (l.be);
 }
 
-void proection_cylinder_del (P_CYLINDER cyl, int ncor)
+void
+proection_cylinder_del (P_CYLINDER cyl, int ncor)
 {
   int i;
 
   for (i = 0; i < ncor; i++)
-  {
-    if (cyl.b1)
     {
-      fprintf (stderr, "-");
-      bezierp_destruct (cyl.b1[i]);
-      free (cyl.b1);
+      if (cyl.b1)
+	{
+	  fprintf (stderr, "-");
+	  bezierp_destruct (cyl.b1[i]);
+	  free (cyl.b1);
+	}
+      if (cyl.b2)
+	{
+	  fprintf (stderr, "-");
+	  bezierp_destruct (cyl.b2[i]);
+	  free (cyl.b2);
+	}
     }
-    if (cyl.b2)
-    {
-      fprintf (stderr, "-");
-      bezierp_destruct (cyl.b2[i]);
-      free (cyl.b2);
-    }
-  }
 
 }
-void proection_mirage_del (P_MIRAGE mir)
+
+void
+proection_mirage_del (P_MIRAGE mir)
 {
   int i;
 
@@ -197,39 +209,45 @@ void proection_mirage_del (P_MIRAGE mir)
   if (mir.nbeziers)
     free (mir.beziers);
 }
-void projection_sphere_del (P_SPHERE sph, int ncor)
+
+void
+projection_sphere_del (P_SPHERE sph, int ncor)
 {
-  int i,j;
+  int i, j;
 
   for (i = 0; i < ncor; i++)
     bezierp_destruct (sph.bs[i]);
   free (sph.bs);
-  
-  for (i = 0; i <sph.nholes; i++)
-  {
-  for(j=0;j<ncor;j++)
-    bezierp_destruct (sph.holes[i].bs[j]);
-  free (sph.holes[i].bs);}
-  free(sph.holes);
+
+  for (i = 0; i < sph.nholes; i++)
+    {
+      for (j = 0; j < ncor; j++)
+	bezierp_destruct (sph.holes[i].bs[j]);
+      free (sph.holes[i].bs);
+    }
+  free (sph.holes);
   proection_mirage_del (sph.mir);
 }
 
-void projection_all_del (P_KUPA all)
+void
+projection_all_del (P_KUPA all)
 {
   int i;
 
   if (all.ncyls)
-  {
-    free (all.cyls);
-  }
+    {
+      free (all.cyls);
+    }
   if (all.nsphers)
-  {
-    for (i = 0; i < all.nsphers; i++)
-      projection_sphere_del (all.sphers[i], all.ncor);
-    free (all.sphers);
-  }
+    {
+      for (i = 0; i < all.nsphers; i++)
+	projection_sphere_del (all.sphers[i], all.ncor);
+      free (all.sphers);
+    }
 }
-void kupa3d_del (KUPA3D k3d)
+
+void
+kupa3d_del (KUPA3D k3d)
 {
   if (k3d.ncyls)
     free (k3d.cyls);
@@ -239,40 +257,36 @@ void kupa3d_del (KUPA3D k3d)
     free (k3d.mirages);
 }
 
-void kupas3d_del (KUPAS3D ks3d)
+void
+kupas3d_del (KUPAS3D ks3d)
 {
   int i;
 
   for (i = 0; i < ks3d.nkupas; i++)
-  {
-    if (ks3d.mirages == ks3d.kupas[i].mirages)
-      ks3d.kupas[i].nmirages = 0;
-    kupa3d_del (ks3d.kupas[i]);
-  }
+    {
+      if (ks3d.mirages == ks3d.kupas[i].mirages)
+	ks3d.kupas[i].nmirages = 0;
+      kupa3d_del (ks3d.kupas[i]);
+    }
   if (ks3d.nmirages)
     free (ks3d.mirages);
   if (ks3d.nkupas)
     free (ks3d.kupas);
 }
 
-void visualization_generator (tensor tens)
+PrimBuf
+image_generator (const KUPA3D * k3d, const VIEWPOINT * VP, tensor tens)
 {
-  PrimBuf prb;
-  KUPA3D *k3d;
+  PrimBuf prb = NULL;
   P_KUPA pk;
-  VIEWPOINT *VP;
-
-  k3d = GetRequest (KUPA_3D);
-  VP = GetRequest (PT_OF_V);
   if (k3d)
-  {
-    pk = project_all (*k3d, tens, 6, *VP);
-    mask_all (pk);
-    if (GetRequest (PRIMITIVES))
-      free (GetRequest (PRIMITIVES));
-    prb = pri_init (2.,2.);
-    prb = plot_projection_all (prb, pk);
-    SetRequest (PRIMITIVES, prb);
-    projection_all_del (pk);
-  }
+    {
+      /* TODO: struct approximation replace "magic" numbers */
+      pk = project_all (k3d, tens, 6, VP);
+      mask_all (pk);
+      prb = pri_init (2., 2.);
+      prb = plot_projection_all (prb, pk);
+      projection_all_del (pk);
+    }
+  return prb;
 }
