@@ -5,12 +5,12 @@
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation; either version 3 of the License, or
  *      (at your option) any later version.
- *      
+ *
  *      This program is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
- *      
+ *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -47,7 +47,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
 				 GTK_RESPONSE_CANCEL, NULL);
 
   hbox = gtk_hbox_new (FALSE, 8);
-  VIEWPOINT *vp;
+  Viewpoint *vp;
   char buf[20];
 
   vp = GetRequest (PT_OF_V);
@@ -140,7 +140,7 @@ dialog_turn (GtkButton * button, gpointer user_data)
 				 GTK_RESPONSE_CANCEL, NULL);
 
   hbox = gtk_hbox_new (FALSE, 8);
-  VIEWPOINT *vp;
+  Viewpoint *vp;
   char buf[20];
 
   vp = GetRequest (PT_OF_V);
@@ -305,11 +305,11 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
     {
       char *filename;
 
-      KUPA3D *k3d = GetRequest (KUPA_3D);
+      Elements3D *k3d = GetRequest (KUPA_3D);
 
       KUPOS *kupos = GetRequest (KUPAS_3D);
 
-      memset (k3d, 0, sizeof (KUPA3D));
+      memset (k3d, 0, sizeof (Elements3D));
       kupas3d_del (kupos->ks3d);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filew));
@@ -394,9 +394,9 @@ ps_to_file2 (GtkButton * button, gpointer user_data)
 
       {
 	PrimBuf prb;
-	KUPA3D *k3d;
+	Elements3D *k3d;
 	P_KUPA pk;
-	VIEWPOINT VP1, VP2;
+	Viewpoint VP1, VP2;
 	double koef, xy;
 	pr_scale psc;
 	FILE *fp;
@@ -550,7 +550,7 @@ void
 move_box_position (int delta)
 {
   KUPOS *kupos = GetRequest (KUPAS_3D);
-  KUPA3D *k3d = GetRequest (KUPA_3D);
+  Elements3D *k3d = GetRequest (KUPA_3D);
   GtkStatusbar *StatusBar = GetRequest (STATUSBAR);
   int max, pos;
   gchar *msg;

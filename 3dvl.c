@@ -5,12 +5,12 @@
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation; either version 3 of the License, or
  *      (at your option) any later version.
- *      
+ *
  *      This program is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
- *      
+ *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -28,12 +28,12 @@
 
 #include "probez.h"
 
-CYLINDER
-interspher_cyl (SPHERE * sph1, SPHERE * sph2, double r, int cyl_id, int type)
+Cylinder
+interspher_cyl (Sphere * sph1, Sphere * sph2, double r, int cyl_id, int type)
 {
   double r1, r2, l;
   vector nap;
-  CYLINDER res;
+  Cylinder res;
   res.type = type;
   r1 = sqrt (sph1->r * sph1->r - r * r);
   r2 = sqrt (sph2->r * sph2->r - r * r);
@@ -134,16 +134,16 @@ parse_intersphcyl (xmlDocPtr doc, xmlNodePtr cur)
   return res;
 }
 
-SPHERE
+Sphere
 parse_sphere (xmlDocPtr doc, xmlNodePtr cur)
 {
 
   xmlChar *key;
 
   cur = cur->xmlChildrenNode;
-  SPHERE res;
+  Sphere res;
 
-  memset (&res, 0, sizeof (SPHERE));
+  memset (&res, 0, sizeof (Sphere));
   while (cur != NULL)
     {
       if ((!xmlStrcmp (cur->name, (const xmlChar *) "center"))
@@ -209,13 +209,13 @@ parse_sphere (xmlDocPtr doc, xmlNodePtr cur)
   return res;
 }
 
-MIRAGE
+Mirage
 parse_mirage (xmlDocPtr doc, xmlNodePtr cur)
 {
 
   xmlChar *key;
 
-  MIRAGE res;
+  Mirage res;
 
   memset (&res, 0, sizeof (res));
   key = xmlGetProp (cur, (xmlChar *) "rotate");
@@ -392,10 +392,10 @@ parse_mirage (xmlDocPtr doc, xmlNodePtr cur)
   return res;
 }
 
-KUPA3D
+Elements3D
 parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
 {
-  KUPA3D res;
+  Elements3D res;
 
   cur = cur->xmlChildrenNode;
   memset (&res, 0, sizeof (res));
@@ -403,10 +403,10 @@ parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
     {
       if ((!xmlStrcmp (cur->name, (const xmlChar *) "sphere")))
 	{
-	  SPHERE sph = parse_sphere (doc, cur);
+	  Sphere sph = parse_sphere (doc, cur);
 
 	  res.sphers =
-	    realloc (res.sphers, sizeof (SPHERE) * (res.nsphers + 1));
+	    realloc (res.sphers, sizeof (Sphere) * (res.nsphers + 1));
 	  res.sphers[res.nsphers] = sph;
 	  res.nsphers++;
 	}
@@ -420,7 +420,7 @@ parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
 		       __LINE__, isph.n1, isph.n2, res.nsphers);
 	      continue;
 	    }
-	  res.cyls = realloc (res.cyls, sizeof (CYLINDER) * (res.ncyls + 1));
+	  res.cyls = realloc (res.cyls, sizeof (Cylinder) * (res.ncyls + 1));
 	  res.cyls[res.ncyls] =
 	    interspher_cyl (res.sphers + isph.n1, res.sphers + isph.n2,
 			    isph.r, res.ncyls, isph.type);
@@ -428,7 +428,7 @@ parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
 	}
       if ((!xmlStrcmp (cur->name, (const xmlChar *) "mirage")))
 	{
-	  MIRAGE mir = parse_mirage (doc, cur);
+	  Mirage mir = parse_mirage (doc, cur);
 
 	  res.mirages =
 	    realloc (res.mirages, sizeof (P_MIRAGE) * (res.nmirages + 1));
@@ -474,7 +474,7 @@ interpret_kupas3d_xml (char *docname)
     {
       if ((!xmlStrcmp (cur->name, (const xmlChar *) "box")))
 	{
-	  KUPA3D k3d = parse_kupa3d (doc, cur);
+	  Elements3D k3d = parse_kupa3d (doc, cur);
 
 	  res.kupas =
 	    realloc (res.kupas, sizeof (*res.kupas) * (res.nkupas + 1));
@@ -483,7 +483,7 @@ interpret_kupas3d_xml (char *docname)
 	}
       if ((!xmlStrcmp (cur->name, (const xmlChar *) "mirage")))
 	{
-	  MIRAGE mir = parse_mirage (doc, cur);
+	  Mirage mir = parse_mirage (doc, cur);
 
 	  res.mirages =
 	    realloc (res.mirages, sizeof (P_MIRAGE) * (res.nmirages + 1));
@@ -511,17 +511,17 @@ interpret_kupas3d_xml (char *docname)
   return res;
 }
 
-KUPA3D
+Elements3D
 interpret_3d_xml (char *docname)
 {
   xmlDocPtr doc;
   xmlNodePtr cur;
-  KUPA3D res;
+  Elements3D res;
   int boxmode = 0, multiboxmode = 0;
 
   setlocale (LC_NUMERIC, "C");
   doc = xmlParseFile (docname);
-  memset (&res, 0, sizeof (KUPA3D));
+  memset (&res, 0, sizeof (Elements3D));
   if (doc == NULL)
     {
       fprintf (stderr, "Document not parsed successfully. \n");

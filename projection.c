@@ -5,12 +5,12 @@
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation; either version 3 of the License, or
  *      (at your option) any later version.
- *      
+ *
  *      This program is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
  *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *      GNU General Public License for more details.
- *      
+ *
  *      You should have received a copy of the GNU General Public License
  *      along with this program; if not, write to the Free Software
  *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -62,9 +62,9 @@ add_be (PARBE * arr, double b, double e, int *nbe)
   return res;
 }
 
-/* 
+/*
  * Makes poligon arround point O in plane with normal vector 'norm',
- * radius 'rpol' and 'ndot' corners 
+ * radius 'rpol' and 'ndot' corners
  */
 vector *
 Poligon (vector O, vector norm, double rpol, int ndot)
@@ -91,7 +91,7 @@ Poligon (vector O, vector norm, double rpol, int ndot)
 
 /**projection to plane*/
 LINVEC
-Projection (VIEWPOINT vp, vector v)
+Projection (Viewpoint vp, vector v)
 {
   LINVEC res;
   double K;
@@ -117,7 +117,8 @@ alph (LINVEC lv)
 }
 
 P_KUPA
-project_all (const KUPA3D * all, tensor tens, int ncor, const VIEWPOINT * VP)
+project_all (const Elements3D * all, tensor tens, int ncor,
+	     const Viewpoint * VP)
 {
   int i;
   P_KUPA res;
@@ -127,7 +128,7 @@ project_all (const KUPA3D * all, tensor tens, int ncor, const VIEWPOINT * VP)
   Allocator (res.cyls = calloc (res.ncyls, sizeof (P_CYLINDER)));
   for (i = 0; i < all->ncyls; i++)
     {
-      CYLINDER cyl;
+      Cylinder cyl;
 
       cyl = all->cyls[i];
       cyl.o = NewVector (cyl.o, tens);
@@ -138,7 +139,7 @@ project_all (const KUPA3D * all, tensor tens, int ncor, const VIEWPOINT * VP)
   Allocator (res.sphers = calloc (res.nsphers, sizeof (P_SPHERE)));
   for (i = 0; i < all->nsphers; i++)
     {
-      SPHERE sph;
+      Sphere sph;
       HOLE *holes;
       int j;
 
@@ -247,7 +248,7 @@ projection_all_del (P_KUPA all)
 }
 
 void
-kupa3d_del (KUPA3D k3d)
+kupa3d_del (Elements3D k3d)
 {
   if (k3d.ncyls)
     free (k3d.cyls);
@@ -275,7 +276,7 @@ kupas3d_del (KUPAS3D ks3d)
 }
 
 PrimBuf
-image_generator (const KUPA3D * k3d, const VIEWPOINT * VP,
+image_generator (const Elements3D * k3d, const Viewpoint * VP,
 		 const tensor * tens)
 {
   PrimBuf prb = NULL;

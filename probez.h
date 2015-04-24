@@ -1,24 +1,43 @@
+/*
+ *      (C) Serhii Lysovenko <lisovenko.s at the Gmail>
+ *
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 3 of the License, or
+ *      (at your option) any later version.
+ *
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
+ *
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *      MA 02110-1301, USA.
+ */
+
 #include <vmath.h>
 #include <pgl.h>
 #include <stdio.h>
 
-/*
- *  нехай вся модель розміщена так, що проектування відбувається на площину X Y
- *  всі елементи моделі мають від'ємну Z
- */
 typedef struct
 {
   vector vp;
   double Z;
-} VIEWPOINT;
+} Viewpoint;
+typedef struct
+{
+  Viewpoint *view_pt;
+  tensor *tens;
+  int n_corners;
+} ProjPar;
 typedef struct
 {
   vector a, b;
   char mode;
 } LINE3D;
 
-// -typedef struct {vector o; double r;char mode;}SPHERE;
-// -typedef struct {int atoms,types,N_symp;MF size;}CFGHEADC;
 typedef struct
 {
   double b, e;
@@ -28,15 +47,13 @@ typedef struct
   double x, y;
 } LINVEC;
 
-// /////
-// об'єкти
-// елменти 3d графіки
+/* elements of 3d graphics */
 typedef struct
 {
   vector n, o;
   double r, l;
   int figure0, figure1, type;
-} CYLINDER;
+} Cylinder;
 typedef struct
 {
   vector n, o;
@@ -49,7 +66,7 @@ typedef struct
   double r;
   int nh, mir_id;
   HOLE *holes;
-} SPHERE;
+} Sphere;
 
 typedef struct
 {
@@ -64,18 +81,18 @@ typedef struct
   LINE *lines;
   BEZIER *beziers;
   int nlines, nbeziers, id, isRotate;
-} MIRAGE;
+} Mirage;
 typedef struct
 {
-  CYLINDER *cyls;
-  SPHERE *sphers;
-  MIRAGE *mirages;
+  Cylinder *cyls;
+  Sphere *sphers;
+  Mirage *mirages;
   int ncyls, nsphers, nmirages;
-} KUPA3D;
+} Elements3D;
 typedef struct
 {
-  KUPA3D *kupas;
-  MIRAGE *mirages;
+  Elements3D *kupas;
+  Mirage *mirages;
   int nkupas, nmirages;
 } KUPAS3D;
 typedef struct
@@ -83,7 +100,7 @@ typedef struct
   KUPAS3D ks3d;
   int position;
 } KUPOS;
-// проекційне представлення
+/* projections */
 typedef struct
 {
   double max_x, max_y, min_x, min_y;
@@ -139,12 +156,12 @@ typedef struct
   int ncyls, nsphers, nlines, ncor;
 } P_KUPA;
 
-// методи
+/* methods */
 vector *Poligon (vector O, vector norm, double rpol, int ndot);
 double alph (LINVEC lv);
-LINVEC Projection (VIEWPOINT, vector v);
+LINVEC Projection (Viewpoint, vector v);
 PARBE *add_be (PARBE * arr, double b, double e, int *nbe);
-// math
+/* math */
 int m_bez_lin_intersection (LINVEC A, LINVEC B, LINVEC C, LINVEC E, LINVEC F,
 			    double *t1, double *u1, double *t2, double *u2);
 double lv_prod (LINVEC a, LINVEC b);
@@ -172,25 +189,24 @@ vector ArbPer (vector norm);
 int intersect_bsect_bsect (LINVEC ba, LINVEC bb, LINVEC bc,
 			   LINVEC ba2, LINVEC bb2, LINVEC bc2,
 			   double *ts, int nst);
-// PROJECTION
+/* PROJECTION */
 SQRAREA start_area (LINVEC st);
 SQRAREA enlarge_area (SQRAREA in, LINVEC en);
-P_CYLINDER proection_cylinder (CYLINDER cyl, int ncor, VIEWPOINT VP);
-P_SPHERE proection_sphere (SPHERE sph, int ncor, VIEWPOINT VP,
-			   MIRAGE * init_mirages, tensor * tens);
-// /////
+P_CYLINDER proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP);
+P_SPHERE proection_sphere (Sphere sph, int ncor, Viewpoint VP,
+			   Mirage * init_mirages, tensor * tens);
 pr_point lv2prp (LINVEC v);
-///
-KUPA3D interpret_3dvl (FILE * fp);
-KUPA3D interpret_3d_xml (char *docname);
+
+Elements3D interpret_3dvl (FILE * fp);
+Elements3D interpret_3d_xml (char *docname);
 KUPAS3D interpret_kupas3d_xml (char *docname);
 PrimBuf plot_projection_all (PrimBuf pb, P_KUPA all);
-P_KUPA project_all (const KUPA3D * all, tensor tens, int ncor,
-		    const VIEWPOINT * VP);
+P_KUPA project_all (const Elements3D * all, tensor tens, int ncor,
+		    const Viewpoint * VP);
 void mask_all (P_KUPA all);
-void kupa3d_del (KUPA3D k3d);
+void kupa3d_del (Elements3D k3d);
 void kupas3d_del (KUPAS3D ks3d);
-PrimBuf image_generator (const KUPA3D * k3d, const VIEWPOINT * VP,
+PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
 			 const tensor * tens);
 /*====================*/
 void InitRequests ();
