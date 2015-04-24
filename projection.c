@@ -275,14 +275,15 @@ kupas3d_del (KUPAS3D ks3d)
 }
 
 PrimBuf
-image_generator (const KUPA3D * k3d, const VIEWPOINT * VP, tensor tens)
+image_generator (const KUPA3D * k3d, const VIEWPOINT * VP,
+		 const tensor * tens)
 {
   PrimBuf prb = NULL;
   P_KUPA pk;
   if (k3d)
     {
       /* TODO: struct approximation replace "magic" numbers */
-      pk = project_all (k3d, tens, 6, VP);
+      pk = project_all (k3d, *tens, 6, VP);
       mask_all (pk);
       prb = pri_init (2., 2.);
       prb = plot_projection_all (prb, pk);

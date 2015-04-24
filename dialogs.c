@@ -616,7 +616,7 @@ event_key_pressed (GtkWidget * widg, GdkEventKey * key, void *data)
       printf ("HWKEY = %d\n", key->hardware_keycode);
       return 0;
     }
-  visualization_generator (*tens);
+  visualization_generator (tens);
   gdk_window_invalidate_rect (widg->window, NULL, TRUE);
   return 0;
 }

@@ -191,7 +191,7 @@ void mask_all (P_KUPA all);
 void kupa3d_del (KUPA3D k3d);
 void kupas3d_del (KUPAS3D ks3d);
 PrimBuf image_generator (const KUPA3D * k3d, const VIEWPOINT * VP,
-			 tensor tens);
+			 const tensor * tens);
 /*====================*/
 void InitRequests ();
 void *GetRequest (int n);

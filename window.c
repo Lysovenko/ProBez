@@ -84,7 +84,7 @@ scribble_button_press_event (GtkWidget * widget,
 }
 
 void
-visualization_generator (tensor tens)
+visualization_generator (const tensor * tens)
 {
   PrimBuf prb = NULL;
   const KUPA3D *k3d = GetRequest (KUPA_3D);
@@ -115,7 +115,7 @@ scribble_motion_notify_event (GtkWidget * widget,
       PrevMousePoint.x = x;
       PrevMousePoint.y = y;
       {
-	visualization_generator (*tens);
+	visualization_generator (tens);
 	gdk_window_invalidate_rect (widget->window, NULL, TRUE);
       }
     }
