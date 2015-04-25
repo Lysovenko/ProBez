@@ -247,7 +247,7 @@ main (int argc, char **argv)
   if (argc > 1)
     {
       FILE *fp;
-      SetsContainer *sets;
+      SetsContainer *setcon;
 
       fp = fopen (argv[1], "r");
       if (fp)

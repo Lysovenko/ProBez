@@ -263,8 +263,6 @@ sets3d_del (Sets3D sets)
 
 PrimBuf
 image_generator (Model * mod)
-//- (const Elements3D * k3d, const Viewpoint * VP,
-//-		 const tensor * tens)
 {
   PrimBuf prb = NULL;
   SetP pk;
