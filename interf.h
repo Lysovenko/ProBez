@@ -9,6 +9,11 @@ void svg_to_file (GtkButton * button, gpointer user_data);
 int event_key_pressed (GtkWidget * widg, GdkEventKey * key, void *data);
 #endif
 
+void init_requests ();
+void *get_request (int n);
+void set_request (int n, void *what);
+void unset_request (int n);
+
 enum Requests
 {
   DAT_COMPCFG = 0,

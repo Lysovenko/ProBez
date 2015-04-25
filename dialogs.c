@@ -50,7 +50,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   Viewpoint *vp;
   char buf[20];
 
-  vp = GetRequest (PT_OF_V);
+  vp = get_request (PT_OF_V);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, FALSE, FALSE,
 		      0);
@@ -143,7 +143,7 @@ dialog_turn (GtkButton * button, gpointer user_data)
   Viewpoint *vp;
   char buf[20];
 
-  vp = GetRequest (PT_OF_V);
+  vp = get_request (PT_OF_V);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, FALSE, FALSE,
 		      0);
@@ -256,7 +256,7 @@ ps_to_stdout (GtkButton * button, gpointer user_data)
 
       sscanf (gtk_entry_get_text (GTK_ENTRY (local_entry2)), "%lf", &koef);
       psc.K = koef;
-      prb = GetRequest (PRIMITIVES);
+      prb = get_request (PRIMITIVES);
       if (prb != NULL)
 	{
 	  GtkWidget *filew;
@@ -305,15 +305,15 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
     {
       char *filename;
 
-      Elements3D *k3d = GetRequest (KUPA_3D);
+      Elements3D *k3d = get_request (KUPA_3D);
 
-      KUPOS *kupos = GetRequest (KUPAS_3D);
+      KUPOS *kupos = get_request (KUPAS_3D);
 
       memset (k3d, 0, sizeof (Elements3D));
-      kupas3d_del (kupos->ks3d);
+      sets3d_del (kupos->ks3d);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filew));
-      kupos->ks3d = interpret_kupas3d_xml (filename);
+      kupos->ks3d = interpret_sets3d_xml (filename);
       if (kupos->ks3d.nkupas)
 	{
 	  *k3d = kupos->ks3d.kupas[0];
@@ -412,7 +412,7 @@ ps_to_file2 (GtkButton * button, gpointer user_data)
 	psc.x = xy;
 	psc.y = xy;
 	psc.K = koef;
-	k3d = GetRequest (KUPA_3D);
+	k3d = get_request (KUPA_3D);
 	fp = fopen (gtk_entry_get_text (GTK_ENTRY (local_entry[3])), "w");
 	if (fp == NULL)
 	  fprintf (stderr, "cant open file: %s\n",
@@ -421,7 +421,7 @@ ps_to_file2 (GtkButton * button, gpointer user_data)
 	  {
 	    tensor *tens;
 
-	    tens = GetRequest (TENS);
+	    tens = get_request (TENS);
 	    fprintf (stderr, "running :)\n");
 	    pk = project_all (k3d, *tens, 16, &VP1);
 	    mask_all (pk);
@@ -519,7 +519,7 @@ svg_to_file (GtkButton * button, gpointer user_data)
 	FILE *fp;
 
 	fp = fopen (gtk_entry_get_text (GTK_ENTRY (local_entry[3])), "w");
-	prb = GetRequest (PRIMITIVES);
+	prb = get_request (PRIMITIVES);
 
 	if (fp == NULL)
 	  fprintf (stderr, "cant open file: %s\n",
@@ -549,9 +549,9 @@ svg_to_file (GtkButton * button, gpointer user_data)
 void
 move_box_position (int delta)
 {
-  KUPOS *kupos = GetRequest (KUPAS_3D);
-  Elements3D *k3d = GetRequest (KUPA_3D);
-  GtkStatusbar *StatusBar = GetRequest (STATUSBAR);
+  KUPOS *kupos = get_request (KUPAS_3D);
+  Elements3D *k3d = get_request (KUPA_3D);
+  GtkStatusbar *StatusBar = get_request (STATUSBAR);
   int max, pos;
   gchar *msg;
 
@@ -575,7 +575,7 @@ event_key_pressed (GtkWidget * widg, GdkEventKey * key, void *data)
 {
   tensor *tens;
 
-  tens = GetRequest (TENS);
+  tens = get_request (TENS);
   switch (key->hardware_keycode)
     {
     case 100 /* left */ :

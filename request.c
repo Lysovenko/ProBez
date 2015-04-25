@@ -23,26 +23,26 @@
 static void **TotalDataForRequests;
 
 void
-InitRequests ()
+init_requests ()
 {
   TotalDataForRequests = malloc (sizeof (void *) * N_requests);
   memset (TotalDataForRequests, 0, sizeof (void *) * N_requests);
 }
 
 void *
-GetRequest (int n)
+get_request (int n)
 {
   return TotalDataForRequests[n];
 }
 
 void
-SetRequest (int n, void *what)
+set_request (int n, void *what)
 {
   TotalDataForRequests[n] = what;
 }
 
 void
-UnsetRequest (int n)
+unset_request (int n)
 {
   TotalDataForRequests[n] = NULL;
 }

@@ -442,7 +442,7 @@ parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
 }
 
 Sets3D
-interpret_kupas3d_xml (char *docname)
+interpret_sets3d_xml (char *docname)
 {
   xmlDocPtr doc;
   xmlNodePtr cur;

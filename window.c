@@ -45,7 +45,7 @@ expose_event (GtkWidget * da, GdkEventExpose * event, gpointer * data)
   gdk_gc_set_foreground (gc, &color);
   gdk_draw_rectangle (da->window, gc, TRUE, 0, 0,
 		      da->allocation.width, da->allocation.height);
-  prb = GetRequest (PRIMITIVES);
+  prb = get_request (PRIMITIVES);
   if (prb != NULL)
     prp_step_by_step_gdk (da->window, gc, prb);
   g_object_unref (gc);
@@ -87,12 +87,12 @@ void
 visualization_generator (const tensor * tens)
 {
   PrimBuf prb = NULL;
-  const Elements3D *k3d = GetRequest (KUPA_3D);
-  const Viewpoint *VP = GetRequest (PT_OF_V);
+  const Elements3D *k3d = get_request (KUPA_3D);
+  const Viewpoint *VP = get_request (PT_OF_V);
   prb = image_generator (k3d, VP, tens);
-  if (GetRequest (PRIMITIVES))
-    free (GetRequest (PRIMITIVES));
-  SetRequest (PRIMITIVES, prb);
+  if (get_request (PRIMITIVES))
+    free (get_request (PRIMITIVES));
+  set_request (PRIMITIVES, prb);
 }
 
 static gboolean
@@ -106,7 +106,7 @@ scribble_motion_notify_event (GtkWidget * widget,
   gdk_window_get_pointer (event->window, &x, &y, &state);
   if (state & GDK_BUTTON1_MASK)
     {
-      tens = GetRequest (TENS);
+      tens = get_request (TENS);
       *tens =
 	RotateCoord (((double) y -
 		      (double) PrevMousePoint.y) / (double) ext_psc.H,
@@ -191,7 +191,7 @@ CreateDraw ()
   gtk_box_pack_start (GTK_BOX (vBox), MenuBar, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vBox), DrawArea, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vBox), StatusBar, FALSE, TRUE, 0);
-  SetRequest (STATUSBAR, StatusBar);
+  set_request (STATUSBAR, StatusBar);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (Delete), NULL);
   gtk_signal_connect (GTK_OBJECT (DrawArea), "configure_event",
@@ -216,8 +216,8 @@ CreateDraw ()
 			 GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_PRESS_MASK);
   gtk_widget_show (vBox);
   gtk_widget_show_all (window);	/* do this last */
-  SetRequest (KUPA_3D, calloc (1, sizeof (Elements3D)));
-  SetRequest (KUPAS_3D, calloc (1, sizeof (KUPOS)));
+  set_request (KUPA_3D, calloc (1, sizeof (Elements3D)));
+  set_request (KUPAS_3D, calloc (1, sizeof (KUPOS)));
   {
     Viewpoint *vp;
     tensor *tens;
@@ -226,10 +226,10 @@ CreateDraw ()
     vp->vp.x = vp->vp.y = 0.;
     vp->vp.z = 10.;
     vp->Z = 8.;
-    SetRequest (PT_OF_V, vp);
+    set_request (PT_OF_V, vp);
     tens = malloc (sizeof (tensor));
     *tens = InitRotation (0., 0.);
-    SetRequest (TENS, tens);
+    set_request (TENS, tens);
   }
 }
 
@@ -237,7 +237,7 @@ int
 main (int argc, char **argv)
 {
   gtk_init (&argc, &argv);
-  InitRequests ();
+  init_requests ();
   CreateDraw ();
   if (argc > 1)
     {
@@ -248,8 +248,8 @@ main (int argc, char **argv)
       if (fp)
 	{
 	  fclose (fp);
-	  ks3d = GetRequest (KUPAS_3D);
-	  ks3d->ks3d = interpret_kupas3d_xml (argv[1]);
+	  ks3d = get_request (KUPAS_3D);
+	  ks3d->ks3d = interpret_sets3d_xml (argv[1]);
 	}
     }
   gtk_main ();

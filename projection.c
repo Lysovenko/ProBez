@@ -259,7 +259,7 @@ kupa3d_del (Elements3D k3d)
 }
 
 void
-kupas3d_del (Sets3D ks3d)
+sets3d_del (Sets3D ks3d)
 {
   int i;
 

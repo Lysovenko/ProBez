@@ -199,20 +199,15 @@ pr_point lv2prp (LinVec v);
 
 Elements3D interpret_3dvl (FILE * fp);
 Elements3D interpret_3d_xml (char *docname);
-Sets3D interpret_kupas3d_xml (char *docname);
+Sets3D interpret_sets3d_xml (char *docname);
 PrimBuf plot_projection_all (PrimBuf pb, P_KUPA all);
 P_KUPA project_all (const Elements3D * all, tensor tens, int ncor,
 		    const Viewpoint * VP);
 void mask_all (P_KUPA all);
 void kupa3d_del (Elements3D k3d);
-void kupas3d_del (Sets3D ks3d);
+void sets3d_del (Sets3D ks3d);
 PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
 			 const tensor * tens);
-/*====================*/
-void InitRequests ();
-void *GetRequest (int n);
-void SetRequest (int n, void *what);
-void UnsetRequest (int n);
 
 /*=======================*/
 void projection_all_del (P_KUPA all);
