@@ -17,6 +17,9 @@
  *      MA 02110-1301, USA.
  */
 
+#ifndef __INTERF_H__
+#define __INTERF_H__
+
 #ifdef  __GTK_H__
 gboolean load3dfile (GtkWidget * widget, gpointer * data);
 gboolean load3d_xml_file (GtkWidget * widget, gpointer * data);
@@ -27,11 +30,14 @@ void ps_to_file2 (GtkButton * button, gpointer user_data);
 void svg_to_file (GtkButton * button, gpointer user_data);
 int event_key_pressed (GtkWidget * widg, GdkEventKey * key, void *data);
 #endif
+
+#ifdef __PROBEZ_H__
 typedef struct
 {
   Sets3D ks3d;
   int position;
 } SetsContainer;
+#endif
 
 void init_requests ();
 void *get_request (int n);
@@ -52,3 +58,4 @@ enum Requests
   G_,
   N_requests
 };
+#endif

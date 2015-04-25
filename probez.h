@@ -17,6 +17,9 @@
  *      MA 02110-1301, USA.
  */
 
+#ifndef __PROBEZ_H__
+#define __PROBEZ_H__
+
 #include <vmath.h>
 #include <pgl.h>
 #include <stdio.h>
@@ -153,7 +156,6 @@ typedef struct
 
 /* methods */
 vector *Poligon (vector O, vector norm, double rpol, int ndot);
-double alph (LinVec lv);
 LinVec project (Viewpoint, vector v);
 ParBE *add_be (ParBE * arr, double b, double e, int *nbe);
 /* math */
@@ -212,3 +214,5 @@ enum Figures
   FIG_CYLINDER = 1,
   FIG_SPHERE
 };
+
+#endif

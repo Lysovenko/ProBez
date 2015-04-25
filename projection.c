@@ -102,20 +102,6 @@ project (Viewpoint vp, vector v)
   return res;
 }
 
-double
-alph (LinVec lv)
-{
-  double av, s, c;
-
-  av = sqrt (lv.x * lv.x + lv.y * lv.y);
-  c = lv.x / av;
-  s = lv.y / av;
-  if (s >= 0)
-    return acos (c);
-  else
-    return 2. * M_PI - acos (c);
-}
-
 SetP
 project_all (const Elements3D * all, tensor tens, int ncor,
 	     const Viewpoint * VP)
