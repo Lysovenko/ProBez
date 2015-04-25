@@ -345,33 +345,3 @@ m_bezier_cut (PrimBuf prb, LinVec a, LinVec b, LinVec c, double t1, double t2)
   return pri_sqr_bezier (prb, lv2prp (oa), lv2prp (ob), lv2prp (oc),
 			 0x000000);
 }
-
-int
-m_bez_lin_intersection (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
-			double *t1, double *u1, double *t2, double *u2)
-{
-  double Z, a, b, c, X[2], U[2];
-  int nroots;
-
-  Z = (F.y - E.y) / (F.x - E.x);
-  a = A.y - 2. * B.y + C.y - A.x * Z + 2. * B.x * Z - C.x * Z;
-  b = 2. * (B.y - A.y + A.x * Z - B.x * Z);
-  c = A.y - A.x * Z + E.x * Z - E.y;
-  nroots = gsl_poly_solve_quadratic (a, b, c, X, X + 1);
-  if (nroots == 0)
-    return 0;
-  U[0] =
-    ((1. - X[0]) * (1. - X[0]) * A.x + 2. * X[0] * (1. - X[0]) * B.x +
-     X[0] * X[0] * C.x - E.x) / (F.x - E.x);
-  *t1 = X[0];
-  *u1 = U[0];
-  if (nroots == 2)
-    {
-      U[1] =
-	((1. - X[1]) * (1. - X[1]) * A.x + 2. * X[1] * (1. - X[1]) * B.x +
-	 X[1] * X[1] * C.x - E.x) / (F.x - E.x);
-      *t2 = X[1];
-      *u2 = U[1];
-    }
-  return nroots;
-}

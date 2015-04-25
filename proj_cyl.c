@@ -56,7 +56,7 @@ proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP)
 	res.b1[i].vis = 1;
     }
   if (res.b2 || res.b1)
-    polig = Poligon (cyl.o, cyl.n, cyl.r / cos (M_PI / (double) ncor), ncor);
+    polig = poligon (cyl.o, cyl.n, cyl.r / cos (M_PI / (double) ncor), ncor);
   else
     polig = 0;
   longn = ProdScal (cyl.l, cyl.n);

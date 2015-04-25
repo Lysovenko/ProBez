@@ -67,7 +67,7 @@ add_be (ParBE * arr, double b, double e, int *nbe)
  * radius 'rpol' and 'ndot' corners
  */
 vector *
-Poligon (vector O, vector norm, double rpol, int ndot)
+poligon (vector O, vector norm, double rpol, int ndot)
 {
   vector *res;
   int i;

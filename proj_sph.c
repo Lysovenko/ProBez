@@ -153,7 +153,7 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
   nv = ProdScal (1. / res.lvis, nv);
   R = sqrt (res.lvis * res.lvis - sph.r * sph.r) * sph.r / res.lvis;
   O = VecSum (sph.o, ProdScal (R * R / res.lvis, nv));
-  polig = Poligon (O, nv, R / cos (M_PI / (double) ncor), ncor);
+  polig = poligon (O, nv, R / cos (M_PI / (double) ncor), ncor);
   Allocator (res.bs = calloc (ncor, sizeof (SBezierP)));
   for (i = 0; i < ncor; i++)
     {
@@ -188,7 +188,7 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 	holelin.fig_id = sph.holes[i].fig_id;
 	holelin.figure = sph.holes[i].figure;
 	polig2 =
-	  Poligon (sph.holes[i].o, sph.holes[i].n,
+	  poligon (sph.holes[i].o, sph.holes[i].n,
 		   sph.holes[i].r / cos (M_PI / (double) ncor), ncor);
 	polig2 = realloc (polig2, ncor * 2 * sizeof (*polig2));
 	for (j = 0; j < ncor; j++)

@@ -155,12 +155,10 @@ typedef struct
 } SetP;
 
 /* methods */
-vector *Poligon (vector O, vector norm, double rpol, int ndot);
+vector *poligon (vector O, vector norm, double rpol, int ndot);
 LinVec project (Viewpoint, vector v);
 ParBE *add_be (ParBE * arr, double b, double e, int *nbe);
 /* math */
-int m_bez_lin_intersection (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
-			    double *t1, double *u1, double *t2, double *u2);
 double lv_prod (LinVec a, LinVec b);
 LinVec lv_ineq (LinVec a, LinVec b);
 LinVec lv_sum (LinVec a, LinVec b);
