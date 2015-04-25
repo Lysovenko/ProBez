@@ -69,8 +69,8 @@ proection_mirage (Mirage init_mir, Sphere sph, int sphID, Viewpoint VP,
     res.beziers = calloc (res.nbeziers, sizeof (BEZIERP));
   for (i = 0; i < res.nlines; i++)
     {
-      res.lines[i].a = Projection (VP, VecSum (sph.o, init_mir.lines[i].a));
-      res.lines[i].b = Projection (VP, VecSum (sph.o, init_mir.lines[i].b));
+      res.lines[i].a = project (VP, VecSum (sph.o, init_mir.lines[i].a));
+      res.lines[i].b = project (VP, VecSum (sph.o, init_mir.lines[i].b));
       res.lines[i].nbe = 0;
       res.lines[i].be = 0;
       res.lines[i].vis = 1;
@@ -86,9 +86,9 @@ proection_mirage (Mirage init_mir, Sphere sph, int sphID, Viewpoint VP,
 	  a = NewVector (init_mir.beziers[i].a, *tens);
 	  b = NewVector (init_mir.beziers[i].b, *tens);
 	  c = NewVector (init_mir.beziers[i].c, *tens);
-	  res.beziers[i].a = Projection (VP, VecSum (sph.o, a));
-	  res.beziers[i].b = Projection (VP, VecSum (sph.o, b));
-	  res.beziers[i].c = Projection (VP, VecSum (sph.o, c));
+	  res.beziers[i].a = project (VP, VecSum (sph.o, a));
+	  res.beziers[i].b = project (VP, VecSum (sph.o, b));
+	  res.beziers[i].c = project (VP, VecSum (sph.o, c));
 	  n = VecIneq (VP.vp, sph.o);
 	  an = DotProd (n, a);
 	  bn = DotProd (n, b);
@@ -127,11 +127,11 @@ proection_mirage (Mirage init_mir, Sphere sph, int sphID, Viewpoint VP,
       else
 	{
 	  res.beziers[i].a =
-	    Projection (VP, VecSum (sph.o, init_mir.beziers[i].a));
+	    project (VP, VecSum (sph.o, init_mir.beziers[i].a));
 	  res.beziers[i].b =
-	    Projection (VP, VecSum (sph.o, init_mir.beziers[i].b));
+	    project (VP, VecSum (sph.o, init_mir.beziers[i].b));
 	  res.beziers[i].c =
-	    Projection (VP, VecSum (sph.o, init_mir.beziers[i].c));
+	    project (VP, VecSum (sph.o, init_mir.beziers[i].c));
 	  res.beziers[i].vis = 1;
 	}
     }
@@ -163,9 +163,9 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 	ProdScal (0.5, VecSum (polig[i], polig[(i > 0) ? i - 1 : ncor - 1]));
       mp2 =
 	ProdScal (0.5, VecSum (polig[i], polig[(i < ncor - 1) ? i + 1 : 0]));
-      res.bs[i].a = Projection (VP, mp1);
-      res.bs[i].b = Projection (VP, polig[i]);
-      res.bs[i].c = Projection (VP, mp2);
+      res.bs[i].a = project (VP, mp1);
+      res.bs[i].b = project (VP, polig[i]);
+      res.bs[i].c = project (VP, mp2);
       res.bs[i].vis = 1;
       if (i == 0)
 	res.sqa = start_area (res.bs[i].a);
@@ -205,9 +205,9 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 	    vector mp1, mp2;
 	    mp1 = polig2[ncor + (j > 0 ? j - 1 : ncor - 1)];
 	    mp2 = polig2[ncor + j];
-	    holelin.bs[j].a = Projection (VP, mp1);
-	    holelin.bs[j].b = Projection (VP, polig2[j]);
-	    holelin.bs[j].c = Projection (VP, mp2);
+	    holelin.bs[j].a = project (VP, mp1);
+	    holelin.bs[j].b = project (VP, polig2[j]);
+	    holelin.bs[j].c = project (VP, mp2);
 	    holelin.bs[j].vis = 1;
 	  }
 

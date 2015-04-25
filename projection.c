@@ -74,7 +74,7 @@ Poligon (vector O, vector norm, double rpol, int ndot)
   double cosa, sina;
 
   Allocator (res = malloc (sizeof (vector) * ndot));
-  res[0] = ArbPer (norm);
+  res[0] = arb_perpendicular (norm);
   cosa = cos (2. * M_PI / (double) ndot);
   sina = sin (2. * M_PI / (double) ndot);
   for (i = 1; i < ndot; i++)
@@ -91,7 +91,7 @@ Poligon (vector O, vector norm, double rpol, int ndot)
 
 /**projection to plane*/
 LinVec
-Projection (Viewpoint vp, vector v)
+project (Viewpoint vp, vector v)
 {
   LinVec res;
   double K;

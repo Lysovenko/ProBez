@@ -159,7 +159,7 @@ typedef struct
 /* methods */
 vector *Poligon (vector O, vector norm, double rpol, int ndot);
 double alph (LinVec lv);
-LinVec Projection (Viewpoint, vector v);
+LinVec project (Viewpoint, vector v);
 ParBE *add_be (ParBE * arr, double b, double e, int *nbe);
 /* math */
 int m_bez_lin_intersection (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
@@ -185,7 +185,7 @@ int intersect_bsect_lin (LinVec ba, LinVec bb, LinVec bc, LinVec la,
 LinVec m_bezier_point (LinVec a, LinVec b, LinVec c, double t);
 PrimBuf m_bezier_cut (PrimBuf prb, LinVec a, LinVec b, LinVec c, double t1,
 		      double t2);
-vector ArbPer (vector norm);
+vector arb_perpendicular (vector norm);
 int intersect_bsect_bsect (LinVec ba, LinVec bb, LinVec bc,
 			   LinVec ba2, LinVec bb2, LinVec bc2,
 			   double *ts, int nst);
@@ -212,6 +212,8 @@ PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
 /*=======================*/
 void projection_all_del (P_KUPA all);
 
-/// FIGURES
-#define FIG_CYLINDER 1
-#define FIG_SPHERE 2
+enum Figures
+{
+  FIG_CYLINDER = 1,
+  FIG_SPHERE
+};

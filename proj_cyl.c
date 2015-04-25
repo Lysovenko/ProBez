@@ -186,16 +186,16 @@ proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP)
       // / Lines
       v1 = ProdScal (cyl.r, v1);
       v2 = ProdScal (cyl.r, v2);
-      res.l1.a = Projection (VP, VecSum (cyl.o, v1));
+      res.l1.a = project (VP, VecSum (cyl.o, v1));
       res.sqa = start_area (res.l1.a);
-      res.l1.b = Projection (VP, VecSum (cyl.o, VecIneq (v1, longn)));
+      res.l1.b = project (VP, VecSum (cyl.o, VecIneq (v1, longn)));
       res.sqa = enlarge_area (res.sqa, res.l1.b);
       res.l1.vis = 1;
       res.l1.be = 0;
       res.l1.nbe = 0;
-      res.l2.a = Projection (VP, VecSum (cyl.o, v2));
+      res.l2.a = project (VP, VecSum (cyl.o, v2));
       res.sqa = enlarge_area (res.sqa, res.l2.a);
-      res.l2.b = Projection (VP, VecSum (cyl.o, VecIneq (v2, longn)));
+      res.l2.b = project (VP, VecSum (cyl.o, VecIneq (v2, longn)));
       res.sqa = enlarge_area (res.sqa, res.l2.b);
       if (cyl.r > 0)
 	res.l2.vis = 1;
@@ -230,18 +230,18 @@ proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP)
 			    (i < ncor - 1) ? polig[i + 1] : polig[0]));
 	if (res.b1)
 	  {
-	    res.b1[i].a = Projection (VP, mp1);
-	    res.b1[i].b = Projection (VP, polig[i]);
-	    res.b1[i].c = Projection (VP, mp2);
+	    res.b1[i].a = project (VP, mp1);
+	    res.b1[i].b = project (VP, polig[i]);
+	    res.b1[i].c = project (VP, mp2);
 	    res.sqa = enlarge_area (res.sqa, res.b1[i].a);
 	    res.sqa = enlarge_area (res.sqa, res.b1[i].b);
 	    res.sqa = enlarge_area (res.sqa, res.b1[i].c);
 	  }
 	if (res.b2)
 	  {
-	    res.b2[i].a = Projection (VP, VecIneq (mp1, longn));
-	    res.b2[i].b = Projection (VP, VecIneq (polig[i], longn));
-	    res.b2[i].c = Projection (VP, VecIneq (mp2, longn));
+	    res.b2[i].a = project (VP, VecIneq (mp1, longn));
+	    res.b2[i].b = project (VP, VecIneq (polig[i], longn));
+	    res.b2[i].c = project (VP, VecIneq (mp2, longn));
 	    res.sqa = enlarge_area (res.sqa, res.b2[i].a);
 	    res.sqa = enlarge_area (res.sqa, res.b2[i].b);
 	    res.sqa = enlarge_area (res.sqa, res.b2[i].c);

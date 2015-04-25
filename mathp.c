@@ -24,7 +24,7 @@
 #include <gsl/gsl_poly.h>
 
 vector
-ArbPer (vector norm)		// arbitrary perpendicular
+arb_perpendicular (vector norm)
 {
   vector res;
 
