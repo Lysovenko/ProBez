@@ -304,9 +304,7 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
   if (gtk_dialog_run (GTK_DIALOG (filew)) == GTK_RESPONSE_ACCEPT)
     {
       char *filename;
-
       Elements3D *k3d = get_request (KUPA_3D);
-
       SetsContainer *kupos = get_request (KUPAS_3D);
 
       memset (k3d, 0, sizeof (Elements3D));
@@ -314,15 +312,17 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filew));
       kupos->ks3d = interpret_sets3d_xml (filename);
-      if (kupos->ks3d.nkupas)
+#ifndef NDEBUG
+      if (kupos->ks3d.nsets)
 	{
-	  *k3d = kupos->ks3d.kupas[0];
+	  *k3d = kupos->ks3d.sets[0];
 	  fprintf (stderr,
 		   "%s:%d: params: ncyls=%d, nsphers=%d,nmirages=%d\n",
 		   __FILE__, __LINE__, k3d->ncyls, k3d->nsphers,
 		   k3d->nmirages);
 	  kupos->position = 0;
 	}
+#endif
     }
   gtk_widget_destroy (filew);
   return FALSE;
@@ -555,7 +555,7 @@ move_box_position (int delta)
   int max, pos;
   gchar *msg;
 
-  max = kupos->ks3d.nkupas;
+  max = kupos->ks3d.nsets;
   pos = kupos->position;
   pos += delta;
   if (pos < 0)
@@ -563,7 +563,7 @@ move_box_position (int delta)
   if (pos >= max)
     pos = 0;
   kupos->position = pos;
-  *k3d = kupos->ks3d.kupas[pos];
+  *k3d = kupos->ks3d.sets[pos];
   msg = g_strdup_printf ("%d/%d", pos + 1, max);
   gtk_statusbar_push (StatusBar, 0, msg);
   g_free (msg);

@@ -476,10 +476,10 @@ interpret_sets3d_xml (char *docname)
 	{
 	  Elements3D k3d = parse_kupa3d (doc, cur);
 
-	  res.kupas =
-	    realloc (res.kupas, sizeof (*res.kupas) * (res.nkupas + 1));
-	  res.kupas[res.nkupas] = k3d;
-	  res.nkupas++;
+	  res.sets =
+	    realloc (res.sets, sizeof (*res.sets) * (res.nsets + 1));
+	  res.sets[res.nsets] = k3d;
+	  res.nsets++;
 	}
       if ((!xmlStrcmp (cur->name, (const xmlChar *) "mirage")))
 	{
@@ -499,12 +499,12 @@ interpret_sets3d_xml (char *docname)
     {
       int i;
 
-      for (i = 0; i < res.nkupas; i++)
+      for (i = 0; i < res.nsets; i++)
 	{
-	  if (res.kupas[i].nmirages == 0)
+	  if (res.sets[i].nmirages == 0)
 	    {
-	      res.kupas[i].nmirages = res.nmirages;
-	      res.kupas[i].mirages = res.mirages;
+	      res.sets[i].nmirages = res.nmirages;
+	      res.sets[i].mirages = res.mirages;
 	    }
 	}
     }

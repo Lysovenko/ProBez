@@ -234,7 +234,7 @@ projection_all_del (SetP all)
 }
 
 void
-kupa3d_del (Elements3D k3d)
+elements3d_del (Elements3D k3d)
 {
   if (k3d.ncyls)
     free (k3d.cyls);
@@ -249,16 +249,16 @@ sets3d_del (Sets3D ks3d)
 {
   int i;
 
-  for (i = 0; i < ks3d.nkupas; i++)
+  for (i = 0; i < ks3d.nsets; i++)
     {
-      if (ks3d.mirages == ks3d.kupas[i].mirages)
-	ks3d.kupas[i].nmirages = 0;
-      kupa3d_del (ks3d.kupas[i]);
+      if (ks3d.mirages == ks3d.sets[i].mirages)
+	ks3d.sets[i].nmirages = 0;
+      elements3d_del (ks3d.sets[i]);
     }
   if (ks3d.nmirages)
     free (ks3d.mirages);
-  if (ks3d.nkupas)
-    free (ks3d.kupas);
+  if (ks3d.nsets)
+    free (ks3d.sets);
 }
 
 PrimBuf

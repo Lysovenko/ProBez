@@ -94,9 +94,17 @@ typedef struct
 } Elements3D;
 typedef struct
 {
-  Elements3D *kupas;
+  Elements3D *set;
   Mirage *mirages;
-  int nkupas, nmirages;
+  int ncorners, nmirages;
+  tensor *rot;
+  Viewpoint *vp;
+} Model;
+typedef struct
+{
+  Elements3D *sets;
+  Mirage *mirages;
+  int nsets, nmirages;
 } Sets3D;
 /* projections */
 typedef struct
@@ -199,7 +207,7 @@ PrimBuf plot_projection_all (PrimBuf pb, SetP all);
 SetP project_all (const Elements3D * all, tensor tens, int ncor,
 		  const Viewpoint * VP);
 void mask_all (SetP all);
-void kupa3d_del (Elements3D k3d);
+void elements3d_del (Elements3D k3d);
 void sets3d_del (Sets3D ks3d);
 PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
 			 const tensor * tens);
