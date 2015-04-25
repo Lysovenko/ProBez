@@ -209,8 +209,7 @@ SetP project_all (const Elements3D * all, tensor tens, int ncor,
 void mask_all (SetP all);
 void elements3d_del (Elements3D k3d);
 void sets3d_del (Sets3D ks3d);
-PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
-			 const tensor * tens);
+PrimBuf image_generator (Model * mod);
 
 /*=======================*/
 void projection_all_del (SetP all);

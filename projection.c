@@ -262,15 +262,16 @@ sets3d_del (Sets3D ks3d)
 }
 
 PrimBuf
-image_generator (const Elements3D * k3d, const Viewpoint * VP,
-		 const tensor * tens)
+image_generator (Model * mod)
+//- (const Elements3D * k3d, const Viewpoint * VP,
+//-		 const tensor * tens)
 {
   PrimBuf prb = NULL;
   SetP pk;
-  if (k3d)
+  if (mod->set)
     {
       /* TODO: struct approximation replace "magic" numbers */
-      pk = project_all (k3d, *tens, 6, VP);
+      pk = project_all (mod->set, *(mod->rot), mod->ncorners, mod->vp);
       mask_all (pk);
       prb = pri_init (2., 2.);
       prb = plot_projection_all (prb, pk);
