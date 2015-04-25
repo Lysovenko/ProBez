@@ -25,20 +25,20 @@
 #include <assert.h>
 #define Allocator(x) assert(x)
 
-SQRAREA
+SqrArea
 start_area (LinVec st)
 {
-  SQRAREA res;
+  SqrArea res;
 
   res.max_x = res.min_x = st.x;
   res.max_y = res.min_y = st.y;
   return res;
 }
 
-SQRAREA
-enlarge_area (SQRAREA in, LinVec en)
+SqrArea
+enlarge_area (SqrArea in, LinVec en)
 {
-  SQRAREA res;
+  SqrArea res;
 
   res.max_x = (in.max_x > en.x) ? in.max_x : en.x;
   res.max_y = (in.max_y > en.y) ? in.max_y : en.y;
@@ -116,16 +116,16 @@ alph (LinVec lv)
     return 2. * M_PI - acos (c);
 }
 
-P_KUPA
+SetP
 project_all (const Elements3D * all, tensor tens, int ncor,
 	     const Viewpoint * VP)
 {
   int i;
-  P_KUPA res;
+  SetP res;
 
   res.ncor = ncor;
   res.ncyls = all->ncyls;
-  Allocator (res.cyls = calloc (res.ncyls, sizeof (P_CYLINDER)));
+  Allocator (res.cyls = calloc (res.ncyls, sizeof (CylinderP)));
   for (i = 0; i < all->ncyls; i++)
     {
       Cylinder cyl;
@@ -136,7 +136,7 @@ project_all (const Elements3D * all, tensor tens, int ncor,
       res.cyls[i] = proection_cylinder (cyl, ncor, *VP);
     }
   res.nsphers = all->nsphers;
-  Allocator (res.sphers = calloc (res.nsphers, sizeof (P_SPHERE)));
+  Allocator (res.sphers = calloc (res.nsphers, sizeof (SphereP)));
   for (i = 0; i < all->nsphers; i++)
     {
       Sphere sph;
@@ -160,21 +160,21 @@ project_all (const Elements3D * all, tensor tens, int ncor,
 }
 
 void
-bezierp_destruct (BEZIERP b)
+bezierp_destruct (SBezierP b)
 {
   if (b.nbe)
     free (b.be);
 }
 
 void
-linep_destruct (LINEP l)
+linep_destruct (LineP l)
 {
   if (l.nbe)
     free (l.be);
 }
 
 void
-proection_cylinder_del (P_CYLINDER cyl, int ncor)
+proection_cylinder_del (CylinderP cyl, int ncor)
 {
   int i;
 
@@ -197,7 +197,7 @@ proection_cylinder_del (P_CYLINDER cyl, int ncor)
 }
 
 void
-proection_mirage_del (P_MIRAGE mir)
+proection_mirage_del (MirageP mir)
 {
   int i;
 
@@ -212,7 +212,7 @@ proection_mirage_del (P_MIRAGE mir)
 }
 
 void
-projection_sphere_del (P_SPHERE sph, int ncor)
+projection_sphere_del (SphereP sph, int ncor)
 {
   int i, j;
 
@@ -231,7 +231,7 @@ projection_sphere_del (P_SPHERE sph, int ncor)
 }
 
 void
-projection_all_del (P_KUPA all)
+projection_all_del (SetP all)
 {
   int i;
 
@@ -280,7 +280,7 @@ image_generator (const Elements3D * k3d, const Viewpoint * VP,
 		 const tensor * tens)
 {
   PrimBuf prb = NULL;
-  P_KUPA pk;
+  SetP pk;
   if (k3d)
     {
       /* TODO: struct approximation replace "magic" numbers */

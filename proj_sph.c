@@ -53,20 +53,20 @@ is_hole_cut (vector v2v, vector n, double R, double r)
   return cosum > DotProd (v2v, n) / l;
 }
 
-P_MIRAGE
+MirageP
 proection_mirage (Mirage init_mir, Sphere sph, int sphID, Viewpoint VP,
 		  tensor * tens)
 {
-  P_MIRAGE res;
+  MirageP res;
   int i;
 
   res.id = sphID;
   res.nlines = init_mir.nlines;
   res.nbeziers = init_mir.nbeziers;
   if (res.nlines)
-    res.lines = calloc (res.nlines, sizeof (LINEP));
+    res.lines = calloc (res.nlines, sizeof (LineP));
   if (res.nbeziers)
-    res.beziers = calloc (res.nbeziers, sizeof (BEZIERP));
+    res.beziers = calloc (res.nbeziers, sizeof (SBezierP));
   for (i = 0; i < res.nlines; i++)
     {
       res.lines[i].a = project (VP, VecSum (sph.o, init_mir.lines[i].a));
@@ -138,23 +138,23 @@ proection_mirage (Mirage init_mir, Sphere sph, int sphID, Viewpoint VP,
   return res;
 }
 
-P_SPHERE
+SphereP
 proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 		  Mirage * init_mirages, tensor * tens)
 {
   vector *polig, nv, O;
-  P_SPHERE res;
+  SphereP res;
   int i, nholes;
   double R;
 
   nv = VecIneq (VP.vp, sph.o);
-  memset (&res, 0, sizeof (P_SPHERE));
+  memset (&res, 0, sizeof (SphereP));
   res.lvis = sqrt (VecAbs2 (nv));
   nv = ProdScal (1. / res.lvis, nv);
   R = sqrt (res.lvis * res.lvis - sph.r * sph.r) * sph.r / res.lvis;
   O = VecSum (sph.o, ProdScal (R * R / res.lvis, nv));
   polig = Poligon (O, nv, R / cos (M_PI / (double) ncor), ncor);
-  Allocator (res.bs = calloc (ncor, sizeof (BEZIERP)));
+  Allocator (res.bs = calloc (ncor, sizeof (SBezierP)));
   for (i = 0; i < ncor; i++)
     {
       vector mp1, mp2;
@@ -181,7 +181,7 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 	(VecIneq (VP.vp, sph.o), sph.holes[i].n, sph.r, sph.holes[i].r))
       {
 	vector *polig2;
-	P_HOLE holelin;
+	HoleP holelin;
 	int j, cut =
 	  is_hole_cut (VecIneq (VP.vp, sph.o), sph.holes[i].n, sph.r,
 		       sph.holes[i].r);
@@ -542,7 +542,7 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 
 	      }
 	    else
-	      memset (holelin.bs, 0, sizeof (BEZIERP) * ncor);
+	      memset (holelin.bs, 0, sizeof (SBezierP) * ncor);
 	  }
 	else
 	  for (j = 0; j < ncor; j++)

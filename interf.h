@@ -8,6 +8,11 @@ void ps_to_file2 (GtkButton * button, gpointer user_data);
 void svg_to_file (GtkButton * button, gpointer user_data);
 int event_key_pressed (GtkWidget * widg, GdkEventKey * key, void *data);
 #endif
+typedef struct
+{
+  Sets3D ks3d;
+  int position;
+} SetsContainer;
 
 void init_requests ();
 void *get_request (int n);

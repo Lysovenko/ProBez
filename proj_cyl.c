@@ -24,10 +24,10 @@
 #include <assert.h>
 #define Allocator(x) assert(x)
 
-P_CYLINDER
+CylinderP
 proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP)
 {
-  P_CYLINDER res;
+  CylinderP res;
 
   vector pvp, pvp1, *polig, longn;
 
@@ -41,11 +41,11 @@ proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP)
 	return res;
       }
   if (cyl.figure0 != 1 && cyl.r > 0)
-    Allocator (res.b1 = calloc (ncor, sizeof (BEZIERP)));
+    Allocator (res.b1 = calloc (ncor, sizeof (SBezierP)));
   else
     res.b1 = NULL;
   if (cyl.figure1 != 1 && cyl.r > 0)
-    Allocator (res.b2 = calloc (ncor, sizeof (BEZIERP)));
+    Allocator (res.b2 = calloc (ncor, sizeof (SBezierP)));
   else
     res.b2 = NULL;
   for (i = 0; i < ncor; i++)

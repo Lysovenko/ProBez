@@ -307,7 +307,7 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
 
       Elements3D *k3d = get_request (KUPA_3D);
 
-      KUPOS *kupos = get_request (KUPAS_3D);
+      SetsContainer *kupos = get_request (KUPAS_3D);
 
       memset (k3d, 0, sizeof (Elements3D));
       sets3d_del (kupos->ks3d);
@@ -395,7 +395,7 @@ ps_to_file2 (GtkButton * button, gpointer user_data)
       {
 	PrimBuf prb;
 	Elements3D *k3d;
-	P_KUPA pk;
+	SetP pk;
 	Viewpoint VP1, VP2;
 	double koef, xy;
 	pr_scale psc;
@@ -549,7 +549,7 @@ svg_to_file (GtkButton * button, gpointer user_data)
 void
 move_box_position (int delta)
 {
-  KUPOS *kupos = get_request (KUPAS_3D);
+  SetsContainer *kupos = get_request (KUPAS_3D);
   Elements3D *k3d = get_request (KUPA_3D);
   GtkStatusbar *StatusBar = get_request (STATUSBAR);
   int max, pos;

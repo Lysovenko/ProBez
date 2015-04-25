@@ -22,18 +22,18 @@
 #include <vmath.h>
 #include "probez.h"
 
-static BEZIERP mask_sph_sph_helper (BEZIERP bp, BEZIERP * ABC, int ncor,
-				    int mode, int m2);
+static SBezierP mask_sph_sph_helper (SBezierP bp, SBezierP * ABC, int ncor,
+				     int mode, int m2);
 
 
 
 /* Help function for next only ;) */
-static LINEP
-mask_cyl_cyl_helper (LINEP lp, LinVec * pts, LinVec * prps)
+static LineP
+mask_cyl_cyl_helper (LineP lp, LinVec * pts, LinVec * prps)
 {
   int i, j, nt = 0;
   double m, start, ts[4], t[2];
-  LINEP res = lp;
+  LineP res = lp;
 
   res = lp;
   for (i = 0; i < 4; i++)
@@ -86,9 +86,10 @@ mask_cyl_cyl_helper (LINEP lp, LinVec * pts, LinVec * prps)
   return res;
 }
 
-static BEZIERP mask_sph_cyl_helper (BEZIERP bp, LinVec * pts, LinVec * prps);
+static SBezierP mask_sph_cyl_helper (SBezierP bp, LinVec * pts,
+				     LinVec * prps);
 void
-mask_cyl_cyl (P_CYLINDER * who, P_CYLINDER whom, int ncor)
+mask_cyl_cyl (CylinderP * who, CylinderP whom, int ncor)
 {
   if (who->lvis > whom.lvis)
     {
@@ -128,10 +129,10 @@ mask_cyl_cyl (P_CYLINDER * who, P_CYLINDER whom, int ncor)
     }
 }
 
-static LINEP
-mask_cyl_sph_helper (LINEP lp, BEZIERP * ABC, int ncor, int mode)
+static LineP
+mask_cyl_sph_helper (LineP lp, SBezierP * ABC, int ncor, int mode)
 {
-  LINEP res = lp;
+  LineP res = lp;
   int i, rr = 0;
   double ts[2], tsr[2];
 
@@ -181,7 +182,7 @@ mask_cyl_sph_helper (LINEP lp, BEZIERP * ABC, int ncor, int mode)
 }
 
 void
-mask_cyl_sph (P_CYLINDER * who, P_SPHERE whom, int ncor)
+mask_cyl_sph (CylinderP * who, SphereP whom, int ncor)
 {
   if (who->lvis > whom.lvis)
     {
@@ -234,10 +235,10 @@ mask_cyl_sph (P_CYLINDER * who, P_SPHERE whom, int ncor)
     }
 }
 
-static BEZIERP
-mask_sph_sph_helper (BEZIERP bp, BEZIERP * ABC, int ncor, int mode, int m2)
+static SBezierP
+mask_sph_sph_helper (SBezierP bp, SBezierP * ABC, int ncor, int mode, int m2)
 {
-  BEZIERP res = bp;
+  SBezierP res = bp;
 
   int i, j, nt = 0;
 
@@ -295,7 +296,7 @@ mask_sph_sph_helper (BEZIERP bp, BEZIERP * ABC, int ncor, int mode, int m2)
 }
 
 void
-mask_mirage_sph (P_MIRAGE who, P_SPHERE whom, int ncor)
+mask_mirage_sph (MirageP who, SphereP whom, int ncor)
 {
   int i;
 
@@ -313,7 +314,7 @@ mask_mirage_sph (P_MIRAGE who, P_SPHERE whom, int ncor)
 }
 
 void
-mask_sph_sph (P_SPHERE * who, P_SPHERE whom, int ncor)
+mask_sph_sph (SphereP * who, SphereP whom, int ncor)
 {
   if (who->lvis > whom.lvis)
     {
@@ -348,12 +349,12 @@ mask_sph_sph (P_SPHERE * who, P_SPHERE whom, int ncor)
 }
 
 /* Help function for next only ;) */
-static BEZIERP
-mask_sph_cyl_helper (BEZIERP bp, LinVec * pts, LinVec * prps)
+static SBezierP
+mask_sph_cyl_helper (SBezierP bp, LinVec * pts, LinVec * prps)
 {
   int i, j, nt = 0, nroots;
   double ts[4], tsr[2], m, start /* , end */ ;
-  BEZIERP res = bp;
+  SBezierP res = bp;
 
   for (i = 0; i < 4; i++)
     {
@@ -402,13 +403,13 @@ mask_sph_cyl_helper (BEZIERP bp, LinVec * pts, LinVec * prps)
   return res;
 }
 
-P_MIRAGE
-mask_mirage_cyl (P_MIRAGE who, P_CYLINDER whom, int ncor, LinVec * pts,
+MirageP
+mask_mirage_cyl (MirageP who, CylinderP whom, int ncor, LinVec * pts,
 		 LinVec * perp)
 {
   int i;
 
-  P_MIRAGE res;
+  MirageP res;
 
   res = who;
   for (i = 0; i < who.nlines; i++)
@@ -435,7 +436,7 @@ mask_mirage_cyl (P_MIRAGE who, P_CYLINDER whom, int ncor, LinVec * pts,
 }
 
 void
-mask_mirage_holes (P_MIRAGE who, BEZIERP * holeline, int nholes, int ncor)
+mask_mirage_holes (MirageP who, SBezierP * holeline, int nholes, int ncor)
 {
   int i, j;
 
@@ -462,7 +463,7 @@ mask_mirage_holes (P_MIRAGE who, BEZIERP * holeline, int nholes, int ncor)
 }
 
 void
-mask_mirage_self (P_MIRAGE who, BEZIERP * bs, int ncor)
+mask_mirage_self (MirageP who, SBezierP * bs, int ncor)
 {
 
   int k;
@@ -475,7 +476,7 @@ mask_mirage_self (P_MIRAGE who, BEZIERP * bs, int ncor)
 }
 
 void
-mask_sph_cyl (P_SPHERE * who, P_CYLINDER whom, int ncor, int cyl_id)
+mask_sph_cyl (SphereP * who, CylinderP whom, int ncor, int cyl_id)
 {
   if (who->lvis > whom.lvis)
     {
@@ -516,7 +517,7 @@ mask_sph_cyl (P_SPHERE * who, P_CYLINDER whom, int ncor, int cyl_id)
 }
 
 void
-mask_all (P_KUPA all)
+mask_all (SetP all)
 {
   int i, j;
 

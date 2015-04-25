@@ -431,7 +431,7 @@ parse_kupa3d (xmlDocPtr doc, xmlNodePtr cur)
 	  Mirage mir = parse_mirage (doc, cur);
 
 	  res.mirages =
-	    realloc (res.mirages, sizeof (P_MIRAGE) * (res.nmirages + 1));
+	    realloc (res.mirages, sizeof (MirageP) * (res.nmirages + 1));
 	  res.mirages[res.nmirages] = mir;
 	  res.nmirages++;
 	}
@@ -486,7 +486,7 @@ interpret_sets3d_xml (char *docname)
 	  Mirage mir = parse_mirage (doc, cur);
 
 	  res.mirages =
-	    realloc (res.mirages, sizeof (P_MIRAGE) * (res.nmirages + 1));
+	    realloc (res.mirages, sizeof (MirageP) * (res.nmirages + 1));
 	  res.mirages[res.nmirages] = mir;
 	  res.nmirages++;
 	}

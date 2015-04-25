@@ -286,7 +286,7 @@ lv_pinpol (LinVec pt, LinVec * per, int sper, LinVec * os, int so, int pers)
 }
 
 int
-lv_pinbezpol (LinVec pt, BEZIERP * ABC, int ncor)
+lv_pinbezpol (LinVec pt, SBezierP * ABC, int ncor)
 {
   int i;
   double ts[2];

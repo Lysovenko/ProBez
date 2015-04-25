@@ -95,66 +95,61 @@ typedef struct
   Mirage *mirages;
   int nkupas, nmirages;
 } Sets3D;
-typedef struct
-{
-  Sets3D ks3d;
-  int position;
-} KUPOS;
 /* projections */
 typedef struct
 {
   double max_x, max_y, min_x, min_y;
-} SQRAREA;
+} SqrArea;
 typedef struct
 {
   LinVec a, b;
   char vis;
   int nbe;
   ParBE *be;
-} LINEP;
+} LineP;
 typedef struct
 {
   LinVec a, b, c;
   char vis;
   int nbe;
   ParBE *be;
-} BEZIERP;
+} SBezierP;
 typedef struct
 {
-  LINEP *lines;
-  BEZIERP *beziers;
+  LineP *lines;
+  SBezierP *beziers;
   int nlines, nbeziers, id;
-} P_MIRAGE;
+} MirageP;
 typedef struct
 {
   LinVec a, b;
   double lv1, lv2;
-  BEZIERP *b1, *b2;
-  LINEP l1, l2;
+  SBezierP *b1, *b2;
+  LineP l1, l2;
   double lvis;
-  SQRAREA sqa;
-} P_CYLINDER;
+  SqrArea sqa;
+} CylinderP;
 typedef struct
 {
-  BEZIERP *bs;
+  SBezierP *bs;
   int fig_id, figure;
-} P_HOLE;
+} HoleP;
 typedef struct
 {
-  BEZIERP *bs;
+  SBezierP *bs;
   double lvis;
-  P_HOLE *holes;
+  HoleP *holes;
   int nholes;
-  P_MIRAGE mir;
-  SQRAREA sqa;
-} P_SPHERE;
+  MirageP mir;
+  SqrArea sqa;
+} SphereP;
 typedef struct
 {
-  P_CYLINDER *cyls;
-  P_SPHERE *sphers;
-  LINEP *lines;
+  CylinderP *cyls;
+  SphereP *sphers;
+  LineP *lines;
   int ncyls, nsphers, nlines, ncor;
-} P_KUPA;
+} SetP;
 
 /* methods */
 vector *Poligon (vector O, vector norm, double rpol, int ndot);
@@ -173,7 +168,7 @@ int m_bez_plan_intersection (vector A, vector B, vector C, vector O, vector N,
 LinVec lv_tri_per (LinVec A, LinVec B, LinVec C, int *err);
 int lv_pinpol (LinVec pt, LinVec * per, int sper, LinVec * os, int so,
 	       int pers);
-int lv_pinbezpol (LinVec pt, BEZIERP * ABC, int ncor);
+int lv_pinbezpol (LinVec pt, SBezierP * ABC, int ncor);
 int lv_bez_lin_inters (LinVec A, LinVec B, LinVec C, LinVec E, LinVec F,
 		       double *t1, double *t2);
 int intersect_lin_lin (LinVec a1, LinVec b1, LinVec a2, LinVec b2,
@@ -190,27 +185,27 @@ int intersect_bsect_bsect (LinVec ba, LinVec bb, LinVec bc,
 			   LinVec ba2, LinVec bb2, LinVec bc2,
 			   double *ts, int nst);
 /* PROJECTION */
-SQRAREA start_area (LinVec st);
-SQRAREA enlarge_area (SQRAREA in, LinVec en);
-P_CYLINDER proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP);
-P_SPHERE proection_sphere (Sphere sph, int ncor, Viewpoint VP,
-			   Mirage * init_mirages, tensor * tens);
+SqrArea start_area (LinVec st);
+SqrArea enlarge_area (SqrArea in, LinVec en);
+CylinderP proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP);
+SphereP proection_sphere (Sphere sph, int ncor, Viewpoint VP,
+			  Mirage * init_mirages, tensor * tens);
 pr_point lv2prp (LinVec v);
 
 Elements3D interpret_3dvl (FILE * fp);
 Elements3D interpret_3d_xml (char *docname);
 Sets3D interpret_sets3d_xml (char *docname);
-PrimBuf plot_projection_all (PrimBuf pb, P_KUPA all);
-P_KUPA project_all (const Elements3D * all, tensor tens, int ncor,
-		    const Viewpoint * VP);
-void mask_all (P_KUPA all);
+PrimBuf plot_projection_all (PrimBuf pb, SetP all);
+SetP project_all (const Elements3D * all, tensor tens, int ncor,
+		  const Viewpoint * VP);
+void mask_all (SetP all);
 void kupa3d_del (Elements3D k3d);
 void sets3d_del (Sets3D ks3d);
 PrimBuf image_generator (const Elements3D * k3d, const Viewpoint * VP,
 			 const tensor * tens);
 
 /*=======================*/
-void projection_all_del (P_KUPA all);
+void projection_all_del (SetP all);
 
 enum Figures
 {

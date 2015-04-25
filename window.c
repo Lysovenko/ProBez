@@ -217,7 +217,7 @@ CreateDraw ()
   gtk_widget_show (vBox);
   gtk_widget_show_all (window);	/* do this last */
   set_request (KUPA_3D, calloc (1, sizeof (Elements3D)));
-  set_request (KUPAS_3D, calloc (1, sizeof (KUPOS)));
+  set_request (KUPAS_3D, calloc (1, sizeof (SetsContainer)));
   {
     Viewpoint *vp;
     tensor *tens;
@@ -242,7 +242,7 @@ main (int argc, char **argv)
   if (argc > 1)
     {
       FILE *fp;
-      KUPOS *ks3d;
+      SetsContainer *ks3d;
 
       fp = fopen (argv[1], "r");
       if (fp)

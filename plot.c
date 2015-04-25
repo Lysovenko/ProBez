@@ -128,7 +128,7 @@ be_lin_inv (ParBE * arbe, int *np)
 }
 
 PrimBuf
-plot_bezierp_be (PrimBuf prb, BEZIERP bp)
+plot_bezierp_be (PrimBuf prb, SBezierP bp)
 {
   int i;
 
@@ -141,7 +141,7 @@ plot_bezierp_be (PrimBuf prb, BEZIERP bp)
 }
 
 PrimBuf
-plot_bezierp (PrimBuf prb, BEZIERP bp)
+plot_bezierp (PrimBuf prb, SBezierP bp)
 {
   return pri_sqr_bezier (prb, lv2prp (bp.a), lv2prp (bp.b), lv2prp (bp.c),
 			 0x000000);
@@ -149,7 +149,7 @@ plot_bezierp (PrimBuf prb, BEZIERP bp)
 }
 
 PrimBuf
-plot_linep_be (PrimBuf prb, LINEP lp)
+plot_linep_be (PrimBuf prb, LineP lp)
 {
   int i;
   PrimBuf res;
@@ -169,13 +169,13 @@ plot_linep_be (PrimBuf prb, LINEP lp)
 }
 
 PrimBuf
-plot_linep (PrimBuf prb, LINEP lp)
+plot_linep (PrimBuf prb, LineP lp)
 {
   return pri_line (prb, lv2prp (lp.a), lv2prp (lp.b), 0x000000);
 }
 
 PrimBuf
-plot_proection_cylinder (PrimBuf pb, P_CYLINDER syl, int ncor)
+plot_proection_cylinder (PrimBuf pb, CylinderP syl, int ncor)
 {
   PrimBuf res;
   int i;
@@ -233,7 +233,7 @@ plot_proection_cylinder (PrimBuf pb, P_CYLINDER syl, int ncor)
 }
 
 PrimBuf
-plot_proection_sphere (PrimBuf pb, P_SPHERE sph, int ncor)
+plot_proection_sphere (PrimBuf pb, SphereP sph, int ncor)
 {
   PrimBuf res;
   int i, j;
@@ -299,7 +299,7 @@ plot_proection_sphere (PrimBuf pb, P_SPHERE sph, int ncor)
 }
 
 PrimBuf
-plot_projection_all (PrimBuf pb, P_KUPA all)
+plot_projection_all (PrimBuf pb, SetP all)
 {
   PrimBuf res;
   int i;
