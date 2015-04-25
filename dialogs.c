@@ -305,22 +305,22 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
     {
       char *filename;
       Elements3D *k3d = get_request (KUPA_3D);
-      SetsContainer *kupos = get_request (KUPAS_3D);
+      SetsContainer *setcon = get_request (KUPAS_3D);
 
       memset (k3d, 0, sizeof (Elements3D));
-      sets3d_del (kupos->sets);
+      sets3d_del (setcon->sets);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filew));
-      kupos->sets = interpret_sets3d_xml (filename);
+      setcon->sets = interpret_sets3d_xml (filename);
 #ifndef NDEBUG
-      if (kupos->sets.nsets)
+      if (setcon->sets.nsets)
 	{
-	  *k3d = kupos->sets.sets[0];
+	  *k3d = setcon->sets.sets[0];
 	  fprintf (stderr,
 		   "%s:%d: params: ncyls=%d, nsphers=%d,nmirages=%d\n",
 		   __FILE__, __LINE__, k3d->ncyls, k3d->nsphers,
 		   k3d->nmirages);
-	  kupos->position = 0;
+	  setcon->position = 0;
 	}
 #endif
     }
@@ -549,21 +549,21 @@ svg_to_file (GtkButton * button, gpointer user_data)
 void
 move_box_position (int delta)
 {
-  SetsContainer *kupos = get_request (KUPAS_3D);
+  SetsContainer *setcon = get_request (KUPAS_3D);
   Elements3D *k3d = get_request (KUPA_3D);
   GtkStatusbar *StatusBar = get_request (STATUSBAR);
   int max, pos;
   gchar *msg;
 
-  max = kupos->sets.nsets;
-  pos = kupos->position;
+  max = setcon->sets.nsets;
+  pos = setcon->position;
   pos += delta;
   if (pos < 0)
     pos = max - 1;
   if (pos >= max)
     pos = 0;
-  kupos->position = pos;
-  *k3d = kupos->sets.sets[pos];
+  setcon->position = pos;
+  *k3d = setcon->sets.sets[pos];
   msg = g_strdup_printf ("%d/%d", pos + 1, max);
   gtk_statusbar_push (StatusBar, 0, msg);
   g_free (msg);

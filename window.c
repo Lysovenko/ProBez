@@ -253,8 +253,8 @@ main (int argc, char **argv)
       if (fp)
 	{
 	  fclose (fp);
-	  sets = get_request (KUPAS_3D);
-	  sets->sets = interpret_sets3d_xml (argv[1]);
+	  setcon = get_request (KUPAS_3D);
+	  setcon->sets = interpret_sets3d_xml (argv[1]);
 	}
     }
   gtk_main ();
