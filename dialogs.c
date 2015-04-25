@@ -308,14 +308,14 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
       SetsContainer *kupos = get_request (KUPAS_3D);
 
       memset (k3d, 0, sizeof (Elements3D));
-      sets3d_del (kupos->ks3d);
+      sets3d_del (kupos->sets);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (filew));
-      kupos->ks3d = interpret_sets3d_xml (filename);
+      kupos->sets = interpret_sets3d_xml (filename);
 #ifndef NDEBUG
-      if (kupos->ks3d.nsets)
+      if (kupos->sets.nsets)
 	{
-	  *k3d = kupos->ks3d.sets[0];
+	  *k3d = kupos->sets.sets[0];
 	  fprintf (stderr,
 		   "%s:%d: params: ncyls=%d, nsphers=%d,nmirages=%d\n",
 		   __FILE__, __LINE__, k3d->ncyls, k3d->nsphers,
@@ -555,7 +555,7 @@ move_box_position (int delta)
   int max, pos;
   gchar *msg;
 
-  max = kupos->ks3d.nsets;
+  max = kupos->sets.nsets;
   pos = kupos->position;
   pos += delta;
   if (pos < 0)
@@ -563,7 +563,7 @@ move_box_position (int delta)
   if (pos >= max)
     pos = 0;
   kupos->position = pos;
-  *k3d = kupos->ks3d.sets[pos];
+  *k3d = kupos->sets.sets[pos];
   msg = g_strdup_printf ("%d/%d", pos + 1, max);
   gtk_statusbar_push (StatusBar, 0, msg);
   g_free (msg);

@@ -247,14 +247,14 @@ main (int argc, char **argv)
   if (argc > 1)
     {
       FILE *fp;
-      SetsContainer *ks3d;
+      SetsContainer *sets;
 
       fp = fopen (argv[1], "r");
       if (fp)
 	{
 	  fclose (fp);
-	  ks3d = get_request (KUPAS_3D);
-	  ks3d->ks3d = interpret_sets3d_xml (argv[1]);
+	  sets = get_request (KUPAS_3D);
+	  sets->sets = interpret_sets3d_xml (argv[1]);
 	}
     }
   gtk_main ();

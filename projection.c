@@ -245,20 +245,20 @@ elements3d_del (Elements3D k3d)
 }
 
 void
-sets3d_del (Sets3D ks3d)
+sets3d_del (Sets3D sets)
 {
   int i;
 
-  for (i = 0; i < ks3d.nsets; i++)
+  for (i = 0; i < sets.nsets; i++)
     {
-      if (ks3d.mirages == ks3d.sets[i].mirages)
-	ks3d.sets[i].nmirages = 0;
-      elements3d_del (ks3d.sets[i]);
+      if (sets.mirages == sets.sets[i].mirages)
+	sets.sets[i].nmirages = 0;
+      elements3d_del (sets.sets[i]);
     }
-  if (ks3d.nmirages)
-    free (ks3d.mirages);
-  if (ks3d.nsets)
-    free (ks3d.sets);
+  if (sets.nmirages)
+    free (sets.mirages);
+  if (sets.nsets)
+    free (sets.sets);
 }
 
 PrimBuf

@@ -34,7 +34,7 @@ int event_key_pressed (GtkWidget * widg, GdkEventKey * key, void *data);
 #ifdef __PROBEZ_H__
 typedef struct
 {
-  Sets3D ks3d;
+  Sets3D sets;
   int position;
 } SetsContainer;
 #endif
