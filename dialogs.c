@@ -95,8 +95,8 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   label = gtk_label_new_with_mnemonic ("Corners");
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 4, 5);
   entry_c = gtk_entry_new ();
-  sprintf (buf, "%g", vp->Z);
-  gtk_entry_set_text (GTK_ENTRY (entry_c), buf);
+  /* sprintf (buf, "%g", ?); */
+  gtk_entry_set_text (GTK_ENTRY (entry_c), "Do nothing"/* buf */);
   gtk_table_attach_defaults (GTK_TABLE (table), entry_c, 1, 2, 4, 5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_c);
 
