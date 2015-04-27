@@ -43,6 +43,7 @@ void init_requests ();
 void *get_request (int n);
 void set_request (int n, void *what);
 void unset_request (int n);
+void allocate_requests(void);
 
 enum Requests
 {

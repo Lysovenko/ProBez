@@ -221,21 +221,7 @@ CreateDraw ()
 			 GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_PRESS_MASK);
   gtk_widget_show (vBox);
   gtk_widget_show_all (window);	/* do this last */
-  set_request (KUPA_3D, calloc (1, sizeof (Elements3D)));
-  set_request (KUPAS_3D, calloc (1, sizeof (SetsContainer)));
-  {
-    Viewpoint *vp;
-    tensor *tens;
-
-    vp = malloc (sizeof (Viewpoint));
-    vp->vp.x = vp->vp.y = 0.;
-    vp->vp.z = 10.;
-    vp->Z = 8.;
-    set_request (PT_OF_V, vp);
-    tens = malloc (sizeof (tensor));
-    *tens = InitRotation (0., 0.);
-    set_request (TENS, tens);
-  }
+  allocate_requests();
 }
 
 int
