@@ -47,16 +47,16 @@ void allocate_requests(void);
 
 enum Requests
 {
-  DAT_COMPCFG = 0,
-  DAT_CIRCLIN,
-  STATUSBAR,
-  CameraData,
-  PRIMITIVES,
-  KUPA_3D,
-  PT_OF_V,
-  TENS,
-  KUPAS_3D,
-  G_,
+  REQ_DAT_COMPCFG = 0,
+  REQ_DAT_CIRCLIN,
+  REQ_STATUSBAR,
+  REQ_CameraData,
+  REQ_PRIMITIVES,
+  REQ_KUPA_3D,
+  REQ_PT_OF_V,
+  REQ_TENS,
+  REQ_KUPAS_3D,
+  REQ_G_,
   N_requests
 };
 #endif

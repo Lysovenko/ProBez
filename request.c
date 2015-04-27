@@ -48,8 +48,8 @@ unset_request (int n)
 }
 void allocate_requests(void)
 {
-  set_request (KUPA_3D, calloc (1, sizeof (Elements3D)));
-  set_request (KUPAS_3D, calloc (1, sizeof (SetsContainer)));
+  set_request (REQ_KUPA_3D, calloc (1, sizeof (Elements3D)));
+  set_request (REQ_KUPAS_3D, calloc (1, sizeof (SetsContainer)));
   {
     Viewpoint *vp;
     tensor *tens;
@@ -58,9 +58,9 @@ void allocate_requests(void)
     vp->vp.x = vp->vp.y = 0.;
     vp->vp.z = 10.;
     vp->Z = 8.;
-    set_request (PT_OF_V, vp);
+    set_request (REQ_PT_OF_V, vp);
     tens = malloc (sizeof (tensor));
     *tens = InitRotation (0., 0.);
-    set_request (TENS, tens);
+    set_request (REQ_TENS, tens);
   }
 }

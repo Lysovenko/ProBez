@@ -45,7 +45,7 @@ expose_event (GtkWidget * da, GdkEventExpose * event, gpointer * data)
   gdk_gc_set_foreground (gc, &color);
   gdk_draw_rectangle (da->window, gc, TRUE, 0, 0,
 		      da->allocation.width, da->allocation.height);
-  prb = get_request (PRIMITIVES);
+  prb = get_request (REQ_PRIMITIVES);
   if (prb != NULL)
     prp_step_by_step_gdk (da->window, gc, prb);
   g_object_unref (gc);
@@ -87,17 +87,17 @@ void
 visualization_generator (const tensor * tens)
 {
   PrimBuf prb = NULL;
-  Elements3D *k3d = get_request (KUPA_3D);
-  Viewpoint *VP = get_request (PT_OF_V);
+  Elements3D *k3d = get_request (REQ_KUPA_3D);
+  Viewpoint *VP = get_request (REQ_PT_OF_V);
   static Model mod;
   mod.set = k3d;
   mod.vp = VP;
   mod.rot = (tensor *) tens;
   mod.ncorners = 6;
   prb = image_generator (&mod);
-  if (get_request (PRIMITIVES))
-    free (get_request (PRIMITIVES));
-  set_request (PRIMITIVES, prb);
+  if (get_request (REQ_PRIMITIVES))
+    free (get_request (REQ_PRIMITIVES));
+  set_request (REQ_PRIMITIVES, prb);
 }
 
 static gboolean
@@ -111,7 +111,7 @@ scribble_motion_notify_event (GtkWidget * widget,
   gdk_window_get_pointer (event->window, &x, &y, &state);
   if (state & GDK_BUTTON1_MASK)
     {
-      tens = get_request (TENS);
+      tens = get_request (REQ_TENS);
       *tens =
 	RotateCoord (((double) y -
 		      (double) PrevMousePoint.y) / (double) ext_psc.H,
@@ -196,7 +196,7 @@ CreateDraw ()
   gtk_box_pack_start (GTK_BOX (vBox), MenuBar, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vBox), DrawArea, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vBox), StatusBar, FALSE, TRUE, 0);
-  set_request (STATUSBAR, StatusBar);
+  set_request (REQ_STATUSBAR, StatusBar);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (Delete), NULL);
   gtk_signal_connect (GTK_OBJECT (DrawArea), "configure_event",
@@ -239,7 +239,7 @@ main (int argc, char **argv)
       if (fp)
 	{
 	  fclose (fp);
-	  setcon = get_request (KUPAS_3D);
+	  setcon = get_request (REQ_KUPAS_3D);
 	  setcon->sets = interpret_sets3d_xml (argv[1]);
 	}
     }
