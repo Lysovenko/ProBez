@@ -96,7 +96,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 4, 5);
   entry_c = gtk_entry_new ();
   /* sprintf (buf, "%g", ?); */
-  gtk_entry_set_text (GTK_ENTRY (entry_c), "Do nothing"/* buf */);
+  gtk_entry_set_text (GTK_ENTRY (entry_c), "Do nothing" /* buf */ );
   gtk_table_attach_defaults (GTK_TABLE (table), entry_c, 1, 2, 4, 5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_c);
 
@@ -327,8 +327,9 @@ load3d_xml_file (GtkWidget * widget, gpointer * data)
 #endif
     }
   gtk_widget_destroy (filew);
+  visualization_generator (get_request (REQ_TENS));
+  gdk_window_invalidate_rect (widget->window, NULL, TRUE);
   return FALSE;
-
 }
 
 void

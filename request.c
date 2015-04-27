@@ -48,7 +48,8 @@ unset_request (int n)
   TotalDataForRequests[n] = NULL;
 }
 
-void allocate_requests(void)
+void
+allocate_requests (void)
 {
   set_request (REQ_KUPA_3D, calloc (1, sizeof (Elements3D)));
   set_request (REQ_KUPAS_3D, calloc (1, sizeof (SetsContainer)));

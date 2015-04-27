@@ -221,7 +221,7 @@ CreateDraw ()
 			 GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_PRESS_MASK);
   gtk_widget_show (vBox);
   gtk_widget_show_all (window);	/* do this last */
-  allocate_requests();
+  allocate_requests ();
 }
 
 int
