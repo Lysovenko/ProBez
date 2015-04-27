@@ -476,8 +476,7 @@ interpret_sets3d_xml (char *docname)
 	{
 	  Elements3D k3d = parse_kupa3d (doc, cur);
 
-	  res.sets =
-	    realloc (res.sets, sizeof (*res.sets) * (res.nsets + 1));
+	  res.sets = realloc (res.sets, sizeof (*res.sets) * (res.nsets + 1));
 	  res.sets[res.nsets] = k3d;
 	  res.nsets++;
 	}

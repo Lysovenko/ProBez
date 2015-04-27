@@ -92,7 +92,7 @@ visualization_generator (const tensor * tens)
   static Model mod;
   mod.set = k3d;
   mod.vp = VP;
-  mod.rot = (tensor*)tens;
+  mod.rot = (tensor *) tens;
   mod.ncorners = 6;
   prb = image_generator (&mod);
   if (get_request (PRIMITIVES))
