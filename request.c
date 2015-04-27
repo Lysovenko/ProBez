@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "probez.h"
 #include "interf.h"
 static void **TotalDataForRequests;
 
@@ -46,6 +47,7 @@ unset_request (int n)
 {
   TotalDataForRequests[n] = NULL;
 }
+
 void allocate_requests(void)
 {
   set_request (REQ_KUPA_3D, calloc (1, sizeof (Elements3D)));

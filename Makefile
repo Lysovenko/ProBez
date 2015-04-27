@@ -20,4 +20,4 @@ window.o:window.c
 dialogs.o:dialogs.c
 	gcc dialogs.c -c $(GTKFLAGS) $(QINC)
 request.o:request.c
-	gcc $< -c
+	gcc $< -c $(QINC)
