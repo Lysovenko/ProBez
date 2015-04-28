@@ -42,10 +42,9 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
 				 GTK_RESPONSE_CANCEL, NULL);
 
   hbox = gtk_hbox_new (FALSE, 8);
-  Viewpoint *vp;
+  Model *mod =  get_request (REQ_MODEL);
   char buf[20];
 
-  vp = get_request (REQ_PT_OF_V);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, FALSE, FALSE,
 		      0);
@@ -62,7 +61,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   label = gtk_label_new_with_mnemonic ("point x");
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   entry_x = gtk_entry_new ();
-  sprintf (buf, "%g", vp->vp.x);
+  sprintf (buf, "%g", mod->vp->vp.x);
   gtk_entry_set_text (GTK_ENTRY (entry_x), buf);
   gtk_table_attach_defaults (GTK_TABLE (table), entry_x, 1, 2, 0, 1);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_x);
@@ -71,7 +70,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
 
   entry_y = gtk_entry_new ();
-  sprintf (buf, "%g", vp->vp.y);
+  sprintf (buf, "%g", mod->vp->vp.y);
   gtk_entry_set_text (GTK_ENTRY (entry_y), buf);
   gtk_table_attach_defaults (GTK_TABLE (table), entry_y, 1, 2, 1, 2);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_y);
@@ -79,7 +78,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   label = gtk_label_new_with_mnemonic ("point z");
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
   entry_z = gtk_entry_new ();
-  sprintf (buf, "%g", vp->vp.z);
+  sprintf (buf, "%g", mod->vp->vp.z);
   gtk_entry_set_text (GTK_ENTRY (entry_z), buf);
   gtk_table_attach_defaults (GTK_TABLE (table), entry_z, 1, 2, 2, 3);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_z);
@@ -87,7 +86,7 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   label = gtk_label_new_with_mnemonic ("point H");
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 3, 4);
   entry_H = gtk_entry_new ();
-  sprintf (buf, "%g", vp->Z);
+  sprintf (buf, "%g", mod->vp->Z);
   gtk_entry_set_text (GTK_ENTRY (entry_H), buf);
   gtk_table_attach_defaults (GTK_TABLE (table), entry_H, 1, 2, 3, 4);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_H);
@@ -95,8 +94,8 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   label = gtk_label_new_with_mnemonic ("Corners");
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 4, 5);
   entry_c = gtk_entry_new ();
-  /* sprintf (buf, "%g", ?); */
-  gtk_entry_set_text (GTK_ENTRY (entry_c), "Do nothing" /* buf */ );
+  sprintf (buf, "%d", mod->ncorners);
+  gtk_entry_set_text (GTK_ENTRY (entry_c), buf);
   gtk_table_attach_defaults (GTK_TABLE (table), entry_c, 1, 2, 4, 5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry_c);
 
@@ -107,16 +106,19 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
     {
 
       double x, y, z, H;
+      int c;
 
       sscanf (gtk_entry_get_text (GTK_ENTRY (entry_x)), "%lf", &x);
       sscanf (gtk_entry_get_text (GTK_ENTRY (entry_y)), "%lf", &y);
       sscanf (gtk_entry_get_text (GTK_ENTRY (entry_z)), "%lf", &z);
       sscanf (gtk_entry_get_text (GTK_ENTRY (entry_H)), "%lf", &H);
+      sscanf (gtk_entry_get_text (GTK_ENTRY (entry_c)), "%d", &c);
 
-      vp->vp.x = x;
-      vp->vp.y = y;
-      vp->vp.z = z;
-      vp->Z = H;
+      mod->vp->vp.x = x;
+      mod->vp->vp.y = y;
+      mod->vp->vp.z = z;
+      mod->vp->Z = H;
+      mod->ncorners = c;
     }
 
   gtk_widget_destroy (dialog);
