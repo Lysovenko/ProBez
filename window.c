@@ -87,14 +87,8 @@ void
 visualization_generator (const tensor * tens)
 {
   PrimBuf prb = NULL;
-  Elements3D *k3d = get_request (REQ_KUPA_3D);
-  Viewpoint *VP = get_request (REQ_PT_OF_V);
-  static Model mod;
-  mod.set = k3d;
-  mod.vp = VP;
-  mod.rot = (tensor *) tens;
-  mod.ncorners = 6;
-  prb = image_generator (&mod);
+  Model *mod = get_request (REQ_MODEL);
+  prb = image_generator (mod);
   if (get_request (REQ_PRIMITIVES))
     free (get_request (REQ_PRIMITIVES));
   set_request (REQ_PRIMITIVES, prb);
