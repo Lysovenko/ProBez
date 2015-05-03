@@ -342,6 +342,5 @@ m_bezier_cut (PrimBuf prb, LinVec a, LinVec b, LinVec c, double t1, double t2)
   ob = m_bezier_point (a, b, c, (t2 + t1) / 2.);
   ob =
     lv_ineq (lv_scal (2., ob), lv_sum (lv_scal (.5, oa), lv_scal (0.5, oc)));
-  return pri_sqr_bezier (prb, lv2prp (oa), lv2prp (ob), lv2prp (oc),
-			 0x000000);
+  return pri_sqr_bezier (prb, lv2prp (oa), lv2prp (ob), lv2prp (oc));
 }

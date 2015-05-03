@@ -143,8 +143,7 @@ plot_bezierp_be (PrimBuf prb, SBezierP bp)
 PrimBuf
 plot_bezierp (PrimBuf prb, SBezierP bp)
 {
-  return pri_sqr_bezier (prb, lv2prp (bp.a), lv2prp (bp.b), lv2prp (bp.c),
-			 0x000000);
+  return pri_sqr_bezier (prb, lv2prp (bp.a), lv2prp (bp.b), lv2prp (bp.c));
 
 }
 
@@ -163,7 +162,7 @@ plot_linep_be (PrimBuf prb, LineP lp)
 			 lv_scal (lp.be[i].b, lp.b))),
 		lv2prp (lv_sum
 			(lv_scal (1. - lp.be[i].e, lp.a),
-			 lv_scal (lp.be[i].e, lp.b))), 0x000000);
+			 lv_scal (lp.be[i].e, lp.b))));
 
   return res;
 }
@@ -171,7 +170,7 @@ plot_linep_be (PrimBuf prb, LineP lp)
 PrimBuf
 plot_linep (PrimBuf prb, LineP lp)
 {
-  return pri_line (prb, lv2prp (lp.a), lv2prp (lp.b), 0x000000);
+  return pri_line (prb, lv2prp (lp.a), lv2prp (lp.b));
 }
 
 PrimBuf
