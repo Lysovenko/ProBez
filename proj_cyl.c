@@ -183,7 +183,7 @@ proection_cylinder (Cylinder cyl, int ncor, Viewpoint VP)
 	      }
 	  }
 
-      // / Lines
+      /* Lines */
       v1 = ProdScal (cyl.r, v1);
       v2 = ProdScal (cyl.r, v2);
       res.l1.a = project (VP, VecSum (cyl.o, v1));

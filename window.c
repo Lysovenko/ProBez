@@ -139,7 +139,7 @@ fill_menu (GtkWidget * window, GtkWidget * MenuBar)
   ViewMenu = gtk_menu_new ();
   file_item = gtk_menu_item_new_with_label ("File");
   view_item = gtk_menu_item_new_with_label ("View");
-  // -------- FILE
+  /* -------- FILE */
   open_item = gtk_menu_item_new_with_label ("Open");
 
   g_signal_connect (GTK_OBJECT (open_item), "activate",
@@ -162,7 +162,7 @@ fill_menu (GtkWidget * window, GtkWidget * MenuBar)
   g_signal_connect (GTK_OBJECT (exit_item), "activate",
 		    G_CALLBACK (gtk_main_quit), NULL);
   gtk_menu_shell_append (GTK_MENU_SHELL (FileMenu), exit_item);
-  // --------- VIEW
+  /* --------- VIEW */
   point_plane_item = gtk_menu_item_new_with_label ("View point");
   g_signal_connect (GTK_OBJECT (point_plane_item), "activate",
 		    G_CALLBACK (dialog_wiewpoint), window);

@@ -1,3 +1,4 @@
+# do cmake -DCMAKE_C_FLAGS="-Wall -pedantic" .. to compile with warnings
 cmake_minimum_required(VERSION 2.8)
 project(probez)
 find_package(PkgConfig)
@@ -24,4 +25,7 @@ target_link_libraries(probez-gtk probez ${GTK2_LIBRARIES})
 install(TARGETS probez DESTINATION lib)
 install(TARGETS probez-gtk DESTINATION bin)
 install(FILES probez.h DESTINATION include)
-
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 1)
+set(CPACK_PACKAGE_VERSION_PATCH 1)
+include(CPack)

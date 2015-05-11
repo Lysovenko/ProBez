@@ -193,13 +193,13 @@ mask_cyl_sph (CylinderP * who, SphereP whom, int ncor)
       if (who->l2.vis)
 	who->l2 = mask_cyl_sph_helper (who->l2, whom.bs, ncor, 1);
 
-      for (i = 0; i < ncor; i++)	// start accelerator
+      for (i = 0; i < ncor; i++)	/* start accelerator */
 	if (who->b1
 	    && (lv_pinbezpol (who->b1[i].a, whom.bs, ncor)
 		|| lv_pinbezpol (who->b1[i].b, whom.bs, ncor)))
 	  break;
       if (i < ncor)
-	{			// end accelerator
+	{			/* end accelerator */
 
 	  for (i = 0; i < ncor; i++)
 	    {
@@ -213,13 +213,13 @@ mask_cyl_sph (CylinderP * who, SphereP whom, int ncor)
 	    who->b1[i] =
 	      mask_sph_sph_helper (who->b1[i], whom.bs, ncor, 1, 1);
 	}
-      for (i = 0; i < ncor; i++)	// start accelerator
+      for (i = 0; i < ncor; i++)	/* start accelerator */
 	if (who->b2
 	    && (lv_pinbezpol (who->b2[i].a, whom.bs, ncor)
 		|| lv_pinbezpol (who->b2[i].b, whom.bs, ncor)))
 	  break;
       if (i < ncor)
-	{			// end accelerator
+	{			/* end accelerator */
 	  for (i = 0; i < ncor; i++)
 	    if (who->b2[i].vis)
 	      if (lv_pinbezpol (who->b2[i].a, whom.bs, ncor)
@@ -319,7 +319,7 @@ mask_sph_sph (SphereP * who, SphereP whom, int ncor)
   if (who->lvis > whom.lvis)
     {
       int i, j;
-      {				// end accelerator
+      {				/* end accelerator */
 	for (i = 0; i < ncor; i++)
 	  if (who->bs[i].vis)
 	    if (lv_pinbezpol (who->bs[i].a, whom.bs, ncor)

@@ -137,11 +137,10 @@ parse_intersphcyl (xmlDocPtr doc, xmlNodePtr cur)
 Sphere
 parse_sphere (xmlDocPtr doc, xmlNodePtr cur)
 {
-
+  Sphere res;
   xmlChar *key;
 
   cur = cur->xmlChildrenNode;
-  Sphere res;
 
   memset (&res, 0, sizeof (Sphere));
   while (cur != NULL)

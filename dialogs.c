@@ -33,6 +33,8 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
   GtkWidget *dialog, *hbox, *stock, *table, *entry_x,
     *entry_H, *entry_y, *entry_z, *label, *entry_c;
   gint response;
+  Model *mod = get_request (REQ_MODEL);
+  char buf[20];
 
   dialog =
     gtk_dialog_new_with_buttons ("View point", GTK_WINDOW (user_data),
@@ -42,8 +44,6 @@ dialog_wiewpoint (GtkButton * button, gpointer user_data)
 				 GTK_RESPONSE_CANCEL, NULL);
 
   hbox = gtk_hbox_new (FALSE, 8);
-  Model *mod =  get_request (REQ_MODEL);
-  char buf[20];
 
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, FALSE, FALSE,
@@ -479,7 +479,7 @@ move_box_position (int delta)
   msg = g_strdup_printf ("%d/%d", pos + 1, max);
   gtk_statusbar_push (StatusBar, 0, msg);
   g_free (msg);
-  // That is Not all
+  /* That is Not all */
 }
 
 int

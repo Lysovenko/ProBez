@@ -427,7 +427,6 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 		}
 
 	  }
-	// /////////////////////////
 	if (sph.holes[i].figure == FIG_CYLINDER)
 	  {
 	    vector n3, v1, v2, pv1, pv2, pvp, pvp1;
@@ -558,7 +557,7 @@ proection_sphere (Sphere sph, int ncor, Viewpoint VP,
 		  && DotProd (VecIneq (mp1, O), nv) < 0.
 		  && DotProd (VecIneq (mp2, O), nv) < 0.)
 		holelin.bs[j].vis = 0;
-	      // place for accelerator
+	      /* place for accelerator */
 	      nroots =
 		m_bez_plan_intersection (mp1, polig2[j], mp2, O, nv, &t1,
 					 &t2);

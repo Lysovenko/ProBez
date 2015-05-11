@@ -265,7 +265,7 @@ plot_proection_sphere (PrimBuf pb, SphereP sph, int ncor)
 	  else
 	    res = plot_bezierp (res, sph.holes[i].bs[j]);
 	}
-  // mirages can be nowhere except spheres
+  /* mirages can be nowhere except spheres */
   for (i = 0; i < sph.mir.nlines; i++)
     if (sph.mir.lines[i].vis)
       {
