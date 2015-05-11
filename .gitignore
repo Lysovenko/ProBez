@@ -3,3 +3,7 @@
 probez-gtk
 *.so
 TAGS
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+Makefile
