@@ -8,14 +8,22 @@ The ProBez project intended to create software, which will approximate some 3D m
 
 Requires
 ========
+
+* CMake
+* pkg-config
 * GTK+-2.0 library and headers
+* LibXml-2
+* GSL
 * [vmath](http://github.com/Lysovenko/vmath)
 * [pgl](http://github.com/Lysovenko/pgl)
 
 Installation
 ============
 
-Compile sources with *make* place *probez-gtk* in the search path of executables and *libprobez.so* - in the search path of libraries ;-)
+* Install dependencies if need.
+* Make your build directory. E.g. <code>mkdir build</code> in folder with sources.
+* Configure with CMake: <code>cmake ..</code> (replace <<..>> with path to sources.
+* Do <code>make install</code> if you are using UNIX system or something like in other systems.
 
 Using
 =====
